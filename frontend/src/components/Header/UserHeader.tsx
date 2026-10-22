@@ -6,7 +6,6 @@ import {
   Monitor,
   Moon,
   Search,
-  Settings,
   Sun,
 } from "lucide-react"
 
@@ -197,12 +196,6 @@ export function UserHeader() {
               )}
             </DropdownMenuLabel>
             <DropdownMenuSeparator />
-            <RouterLink to="/settings">
-              <DropdownMenuItem>
-                <Settings />
-                帳號設定
-              </DropdownMenuItem>
-            </RouterLink>
             <DropdownMenuItem onClick={() => logout()}>
               <LogOut />
               登出
