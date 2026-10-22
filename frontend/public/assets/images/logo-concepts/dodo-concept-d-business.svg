@@ -1,0 +1,7 @@
+<svg width="260" height="64" viewBox="0 0 260 64" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="DoDo Admin business logo concept">
+  <path d="M32 5L56 15V31C56 45.2 45.9 55.4 32 60C18.1 55.4 8 45.2 8 31V15L32 5Z" fill="#0F2742"/>
+  <path d="M21 20H33C41.3 20 47 24.9 47 32C47 39.1 41.3 44 33 44H21V20ZM29 27V37H33C36.7 37 39 35.1 39 32C39 28.9 36.7 27 33 27H29Z" fill="#F8FAFC"/>
+  <path d="M18 16H46" stroke="#CBD5E1" stroke-width="2" stroke-linecap="round"/>
+  <text x="72" y="41" fill="#0F172A" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="27" font-weight="750">DoDo Admin</text>
+  <path d="M73 49H218" stroke="#CBD5E1" stroke-width="2" stroke-linecap="round"/>
+</svg>

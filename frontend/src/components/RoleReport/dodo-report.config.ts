@@ -1,0 +1,30 @@
+export const dodoReportConfig = {
+  reportKey: 'system.role-report',
+  reportTitle: '角色權限報表',
+  reportDescription: '查詢角色狀態、使用者指派數與選單權限範圍。',
+  enableExport: true,
+  enableGlobalSearch: true,
+  enableFilters: true,
+  enableSorting: true,
+  enablePagination: false,
+  enableColumnVisibility: true,
+  enableColumnOrder: true,
+  enableColumnPinning: false,
+  enableRowExpansion: true,
+  fields: {
+    id: { label: 'Role ID', visible: false, sortable: false, filterable: false, exportable: true, format: 'text', emptyText: '—', width: 300 },
+    code: { label: '角色代號', visible: true, sortable: true, filterable: true, exportable: true, format: 'text', emptyText: '—', width: 220 },
+    name: { label: '角色名稱', visible: true, sortable: true, filterable: true, exportable: true, format: 'text', emptyText: '—', width: 180 },
+    description: { label: '說明', visible: true, sortable: true, filterable: true, exportable: true, format: 'text', emptyText: '未填寫', width: 320 },
+    is_active: { label: '狀態', visible: true, sortable: true, filterable: true, exportable: true, format: 'boolean', emptyText: '—', width: 110 },
+    sort_order: { label: '排序', visible: true, sortable: true, filterable: false, exportable: true, format: 'number', emptyText: '0', width: 100 },
+    user_count: { label: '使用者數', visible: true, sortable: true, filterable: false, exportable: true, format: 'number', emptyText: '0', width: 120 },
+    menu_count: { label: 'Menu 數', visible: true, sortable: true, filterable: true, exportable: true, format: 'number', emptyText: '0', width: 120 },
+    menu_keys: { label: 'Menu Keys', visible: false, sortable: false, filterable: true, exportable: true, format: 'badge-list', emptyText: '無', width: 420 },
+    menu_labels: { label: 'Menu 名稱', visible: false, sortable: false, filterable: true, exportable: true, format: 'badge-list', emptyText: '無', width: 420 },
+    created_at: { label: '建立時間', visible: false, sortable: true, filterable: false, exportable: true, format: 'datetime', emptyText: '—', width: 180 },
+    updated_at: { label: '更新時間', visible: false, sortable: true, filterable: false, exportable: true, format: 'datetime', emptyText: '—', width: 180 },
+  },
+} as const
+
+export type RoleReportFieldKey = keyof typeof dodoReportConfig.fields

@@ -1,0 +1,30 @@
+export const dodoReportConfig = {
+  reportKey: 'erp.wo-readonly',
+  reportTitle: '工單維護作業（asfi301）',
+  reportDescription: '唯讀查詢 TIPTOP 工單檔（sfb_file），預設查本月輸入日期，日期區間最多 366 天；資料不可在此修改。',
+  enableExport: true,
+  enableFilters: true,
+  enableSorting: true,
+  enablePagination: true,
+  enableColumnVisibility: true,
+  enableColumnOrder: true,
+  fields: {
+    wo: { label: '工單編號', visible: true, sortable: true, exportable: true, format: 'text', emptyText: '—', width: 180 },
+    wo_name: { label: '工單名稱', visible: true, sortable: true, exportable: true, format: 'text', emptyText: '—', width: 160 },
+    wo_type: { label: '工單型態', visible: true, sortable: true, exportable: true, format: 'wo-type', emptyText: '—', width: 120 },
+    confirmed: { label: '確認否', visible: true, sortable: true, exportable: true, format: 'confirmed', emptyText: '—', width: 110 },
+    status: { label: '工單狀態', visible: true, sortable: true, exportable: true, format: 'wo-status', emptyText: '—', width: 170 },
+    part_no: { label: '料號', visible: true, sortable: true, exportable: true, format: 'text', emptyText: '—', width: 180 },
+    plan_qty: { label: '生產數量', visible: true, sortable: true, exportable: true, format: 'number', emptyText: '—', width: 110 },
+    completed_qty: { label: '完工入庫數量', visible: true, sortable: true, exportable: true, format: 'number', emptyText: '—', width: 130 },
+    scrap_qty: { label: '報廢數量', visible: true, sortable: true, exportable: true, format: 'number', emptyText: '—', width: 110 },
+    plan_start_date: { label: '預計開工日', visible: true, sortable: true, exportable: true, format: 'date', emptyText: '—', width: 120 },
+    plan_end_date: { label: '預計完工日', visible: true, sortable: true, exportable: true, format: 'date', emptyText: '—', width: 120 },
+    line_no: { label: '生產線(MES報工預設)', visible: true, sortable: true, exportable: true, format: 'text', emptyText: '—', width: 170 },
+    mes_flow_type: { label: 'MES工單流程類型', visible: true, sortable: true, exportable: true, format: 'number', emptyText: '—', width: 150 },
+    lot_no: { label: '生產批號', visible: true, sortable: true, exportable: true, format: 'text', emptyText: '—', width: 120 },
+    input_date: { label: '輸入日期', visible: true, sortable: true, exportable: true, format: 'date', emptyText: '—', width: 120 },
+  },
+} as const
+
+export type ErpWoFieldKey = keyof typeof dodoReportConfig.fields

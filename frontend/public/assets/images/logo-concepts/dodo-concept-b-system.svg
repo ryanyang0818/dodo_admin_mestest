@@ -1,0 +1,13 @@
+<svg width="260" height="64" viewBox="0 0 260 64" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="DoDo Admin system logo concept">
+  <rect x="4" y="4" width="56" height="56" rx="10" fill="#0F2742"/>
+  <path d="M18 20H32C40.837 20 47 24.992 47 32C47 39.008 40.837 44 32 44H18V20ZM26 27V37H32C36.303 37 39 35.056 39 32C39 28.944 36.303 27 32 27H26Z" fill="#F8FAFC"/>
+  <circle cx="19" cy="20" r="3" fill="#38BDF8"/>
+  <circle cx="47" cy="20" r="3" fill="#38BDF8"/>
+  <circle cx="47" cy="44" r="3" fill="#38BDF8"/>
+  <circle cx="19" cy="44" r="3" fill="#38BDF8"/>
+  <path d="M22 20H44M47 23V41M22 44H44M19 23V41" stroke="#38BDF8" stroke-width="2" stroke-linecap="round"/>
+  <text x="72" y="41" fill="#0F172A" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="27" font-weight="750">DoDo Admin</text>
+  <path d="M73 49H128M137 49H181M190 49H227" stroke="#CBD5E1" stroke-width="2" stroke-linecap="round"/>
+  <circle cx="132" cy="49" r="2.5" fill="#38BDF8"/>
+  <circle cx="185" cy="49" r="2.5" fill="#38BDF8"/>
+</svg>

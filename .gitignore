@@ -1,0 +1,38 @@
+# AI相關排除
+.agents
+.claude
+.codex
+
+# 文件
+/docs/
+常用指令.md
+
+# 環境變數與機密設定
+.env
+.env.local
+.env.*.local
+/000_domain-knowledge/
+.codex/logs/
+
+.playwright-mcp/
+*.local.json
+skills-lock.json
+
+.vscode/*
+!.vscode/extensions.json
+
+# 相依套件
+.venv/
+node_modules/
+
+/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/
+
+# Python 快取
+__pycache__/
+*.pyc
+
+# 前端建置產物
+frontend/dist/
