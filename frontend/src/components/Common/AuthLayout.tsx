@@ -4,15 +4,18 @@ import { Footer } from "./Footer"
 
 interface AuthLayoutProps {
   children: React.ReactNode
+  aside?: React.ReactNode
 }
 
-export function AuthLayout({ children }: AuthLayoutProps) {
+export function AuthLayout({ children, aside }: AuthLayoutProps) {
   return (
     <div className="grid min-h-svh lg:grid-cols-2">
-      <div className="bg-muted dark:bg-zinc-900 relative hidden lg:flex lg:items-center lg:justify-center">
-        <Logo variant="full" className="h-16" asLink={false} />
+      <div
+        className={`bg-muted dark:bg-zinc-900 relative order-2 ${aside ? "flex" : "hidden lg:flex"} lg:order-1 lg:items-center lg:justify-center`}
+      >
+        {aside ?? <Logo variant="full" className="h-16" asLink={false} />}
       </div>
-      <div className="flex flex-col gap-4 p-6 md:p-10">
+      <div className="order-1 flex flex-col gap-4 p-6 md:p-10 lg:order-2">
         <div className="flex justify-end">
           <Appearance />
         </div>

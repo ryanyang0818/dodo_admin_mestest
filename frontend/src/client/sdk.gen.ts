@@ -3,7 +3,122 @@
 import type { CancelablePromise } from './core/CancelablePromise';
 import { OpenAPI } from './core/OpenAPI';
 import { request as __request } from './core/request';
-import type { HelloHelloWorldResponse, ItemsReadItemsData, ItemsReadItemsResponse, ItemsCreateItemData, ItemsCreateItemResponse, ItemsReadItemData, ItemsReadItemResponse, ItemsUpdateItemData, ItemsUpdateItemResponse, ItemsDeleteItemData, ItemsDeleteItemResponse, LoginLoginAccessTokenData, LoginLoginAccessTokenResponse, LoginTestTokenResponse, LoginRecoverPasswordData, LoginRecoverPasswordResponse, LoginResetPasswordData, LoginResetPasswordResponse, LoginRecoverPasswordHtmlContentData, LoginRecoverPasswordHtmlContentResponse, MenusReadMyMenuTreeResponse, PageDatabaseMesDictionaryReadMesTablesData, PageDatabaseMesDictionaryReadMesTablesResponse, PageDatabaseMesDictionaryReadMesColumnsData, PageDatabaseMesDictionaryReadMesColumnsResponse, PageDatabaseTtDictionaryReadTtTablesData, PageDatabaseTtDictionaryReadTtTablesResponse, PageDatabaseTtDictionaryReadTtColumnsData, PageDatabaseTtDictionaryReadTtColumnsResponse, PageErpMenuReadonlyReadErpMenuData, PageErpMenuReadonlyReadErpMenuResponse, PageErpSlipReadonlyReadErpSlipsResponse, PageErpWoReadonlyReadErpWoSqlData, PageErpWoReadonlyReadErpWoSqlResponse, PageErpWoReadonlyReadErpWoOptionsResponse, PageErpWoReadonlyExportErpWoData, PageErpWoReadonlyExportErpWoResponse, PageErpWoReadonlyReadErpWoData, PageErpWoReadonlyReadErpWoResponse, PageHrUserReportReadUserReportResponse, PageMesInspectionQueryReadInspectionLotData, PageMesInspectionQueryReadInspectionLotResponse, PageMesInspectionQueryReadInspectionFormsResponse, PageMesInspectionQueryReadInspectionSheetsData, PageMesInspectionQueryReadInspectionSheetsResponse, PageMesInspectionQueryReadInspectionMeasurementsData, PageMesInspectionQueryReadInspectionMeasurementsResponse, PageMesInspectionQueryReadInspectionParametersData, PageMesInspectionQueryReadInspectionParametersResponse, PageMesInspectionQueryReadInspectionSqlData, PageMesInspectionQueryReadInspectionSqlResponse, PageMesInspectionQueryExportInspectionMeasurementsData, PageMesInspectionQueryExportInspectionMeasurementsResponse, PageMesUserReportReadMesUserReportSqlData, PageMesUserReportReadMesUserReportSqlResponse, PageMesUserReportReadMesUserReportData, PageMesUserReportReadMesUserReportResponse, PageMesUserReportReadMesUserReportOptionsResponse, PageMesWoReportReadMesWoReportSqlData, PageMesWoReportReadMesWoReportSqlResponse, PageMesWoReportReadMesWoReportData, PageMesWoReportReadMesWoReportResponse, PageMesWoReportReadMesWoReportOptionsResponse, PageMesWorkReportReadMesWorkReportSqlData, PageMesWorkReportReadMesWorkReportSqlResponse, PageMesWorkReportReadMesWorkReportOptionsResponse, PageMesWorkReportExportMesWorkReportData, PageMesWorkReportExportMesWorkReportResponse, PageMesWorkReportReadMesWorkReportDetailsData, PageMesWorkReportReadMesWorkReportDetailsResponse, PageMesWorkReportReadMesWorkReportData, PageMesWorkReportReadMesWorkReportResponse, PageSystemMenusReadMenusData, PageSystemMenusReadMenusResponse, PageSystemMenusCreateMenuData, PageSystemMenusCreateMenuResponse, PageSystemMenusReadMenuData, PageSystemMenusReadMenuResponse, PageSystemMenusUpdateMenuData, PageSystemMenusUpdateMenuResponse, PageSystemMenusDeleteMenuData, PageSystemMenusDeleteMenuResponse, PageSystemRoleReportReadRoleReportResponse, PageTodoReportReadTodoReportResponse, PageTodosReadTodosData, PageTodosReadTodosResponse, PageTodosCreateTodoData, PageTodosCreateTodoResponse, PageTodosReadTodoData, PageTodosReadTodoResponse, PageTodosUpdateTodoData, PageTodosUpdateTodoResponse, PageTodosDeleteTodoData, PageTodosDeleteTodoResponse, PrivateCreateUserData, PrivateCreateUserResponse, TestReadHelloResponse, UsersReadUsersData, UsersReadUsersResponse, UsersCreateUserData, UsersCreateUserResponse, UsersReadUserMeResponse, UsersDeleteUserMeResponse, UsersUpdateUserMeData, UsersUpdateUserMeResponse, UsersUpdatePasswordMeData, UsersUpdatePasswordMeResponse, UsersRegisterUserData, UsersRegisterUserResponse, UsersReadUserByIdData, UsersReadUserByIdResponse, UsersUpdateUserData, UsersUpdateUserResponse, UsersDeleteUserData, UsersDeleteUserResponse, UtilsTestEmailData, UtilsTestEmailResponse, UtilsHealthCheckResponse } from './types.gen';
+import type { BulletinsReadBulletinsData, BulletinsReadBulletinsResponse, BulletinsCreateBulletinData, BulletinsCreateBulletinResponse, BulletinsReadBulletinData, BulletinsReadBulletinResponse, BulletinsUpdateBulletinData, BulletinsUpdateBulletinResponse, BulletinsUploadBulletinAssetData, BulletinsUploadBulletinAssetResponse, HelloHelloWorldResponse, ItemsReadItemsData, ItemsReadItemsResponse, ItemsCreateItemData, ItemsCreateItemResponse, ItemsReadItemData, ItemsReadItemResponse, ItemsUpdateItemData, ItemsUpdateItemResponse, ItemsDeleteItemData, ItemsDeleteItemResponse, LoginLoginAccessTokenData, LoginLoginAccessTokenResponse, LoginTestTokenResponse, LoginRecoverPasswordData, LoginRecoverPasswordResponse, LoginResetPasswordData, LoginResetPasswordResponse, LoginRecoverPasswordHtmlContentData, LoginRecoverPasswordHtmlContentResponse, MenusReadMyMenuTreeResponse, PageDatabaseMesDictionaryReadMesTablesData, PageDatabaseMesDictionaryReadMesTablesResponse, PageDatabaseMesDictionaryReadMesColumnsData, PageDatabaseMesDictionaryReadMesColumnsResponse, PageDatabaseTtDictionaryReadTtTablesData, PageDatabaseTtDictionaryReadTtTablesResponse, PageDatabaseTtDictionaryReadTtColumnsData, PageDatabaseTtDictionaryReadTtColumnsResponse, PageErpMenuReadonlyReadErpMenuData, PageErpMenuReadonlyReadErpMenuResponse, PageErpSlipReadonlyReadErpSlipsResponse, PageErpWoReadonlyReadErpWoSqlData, PageErpWoReadonlyReadErpWoSqlResponse, PageErpWoReadonlyReadErpWoOptionsResponse, PageErpWoReadonlyExportErpWoData, PageErpWoReadonlyExportErpWoResponse, PageErpWoReadonlyReadErpWoData, PageErpWoReadonlyReadErpWoResponse, PageHrUserReportReadUserReportResponse, PageMesInspectionQueryReadInspectionLotData, PageMesInspectionQueryReadInspectionLotResponse, PageMesInspectionQueryReadInspectionFormsResponse, PageMesInspectionQueryReadInspectionSheetsData, PageMesInspectionQueryReadInspectionSheetsResponse, PageMesInspectionQueryReadInspectionMeasurementsData, PageMesInspectionQueryReadInspectionMeasurementsResponse, PageMesInspectionQueryReadInspectionParametersData, PageMesInspectionQueryReadInspectionParametersResponse, PageMesInspectionQueryReadInspectionSqlData, PageMesInspectionQueryReadInspectionSqlResponse, PageMesInspectionQueryExportInspectionMeasurementsData, PageMesInspectionQueryExportInspectionMeasurementsResponse, PageMesUserReportReadMesUserReportSqlData, PageMesUserReportReadMesUserReportSqlResponse, PageMesUserReportReadMesUserReportData, PageMesUserReportReadMesUserReportResponse, PageMesUserReportReadMesUserReportOptionsResponse, PageMesWoReportReadMesWoReportSqlData, PageMesWoReportReadMesWoReportSqlResponse, PageMesWoReportReadMesWoReportData, PageMesWoReportReadMesWoReportResponse, PageMesWoReportReadMesWoReportOptionsResponse, PageMesWorkReportReadMesWorkReportSqlData, PageMesWorkReportReadMesWorkReportSqlResponse, PageMesWorkReportReadMesWorkReportOptionsResponse, PageMesWorkReportExportMesWorkReportData, PageMesWorkReportExportMesWorkReportResponse, PageMesWorkReportReadMesWorkReportDetailsData, PageMesWorkReportReadMesWorkReportDetailsResponse, PageMesWorkReportReadMesWorkReportData, PageMesWorkReportReadMesWorkReportResponse, PageSystemMenusReadMenusData, PageSystemMenusReadMenusResponse, PageSystemMenusCreateMenuData, PageSystemMenusCreateMenuResponse, PageSystemMenusReadMenuData, PageSystemMenusReadMenuResponse, PageSystemMenusUpdateMenuData, PageSystemMenusUpdateMenuResponse, PageSystemMenusDeleteMenuData, PageSystemMenusDeleteMenuResponse, PageSystemRoleReportReadRoleReportResponse, PageTodoReportReadTodoReportResponse, PageTodosReadTodosData, PageTodosReadTodosResponse, PageTodosCreateTodoData, PageTodosCreateTodoResponse, PageTodosReadTodoData, PageTodosReadTodoResponse, PageTodosUpdateTodoData, PageTodosUpdateTodoResponse, PageTodosDeleteTodoData, PageTodosDeleteTodoResponse, PrivateCreateUserData, PrivateCreateUserResponse, PublicBulletinsReadPublicBulletinsData, PublicBulletinsReadPublicBulletinsResponse, PublicBulletinsReadPublicBulletinData, PublicBulletinsReadPublicBulletinResponse, PublicBulletinsReadPublicBulletinAssetData, PublicBulletinsReadPublicBulletinAssetResponse, TestReadHelloResponse, UsersReadUsersData, UsersReadUsersResponse, UsersCreateUserData, UsersCreateUserResponse, UsersReadUserMeResponse, UsersDeleteUserMeResponse, UsersUpdateUserMeData, UsersUpdateUserMeResponse, UsersUpdatePasswordMeData, UsersUpdatePasswordMeResponse, UsersRegisterUserData, UsersRegisterUserResponse, UsersReadUserByIdData, UsersReadUserByIdResponse, UsersUpdateUserData, UsersUpdateUserResponse, UsersDeleteUserData, UsersDeleteUserResponse, UtilsTestEmailData, UtilsTestEmailResponse, UtilsHealthCheckResponse } from './types.gen';
+
+export class BulletinsService {
+    /**
+     * Readbulletins
+     * @param data The data for the request.
+     * @param data.skip
+     * @param data.limit
+     * @param data.keyword
+     * @param data.status
+     * @param data.isPinned
+     * @returns BulletinPostsPublic Successful Response
+     * @throws ApiError
+     */
+    public static readBulletins(data: BulletinsReadBulletinsData = {}): CancelablePromise<BulletinsReadBulletinsResponse> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/api/v1/bulletins/',
+            query: {
+                skip: data.skip,
+                limit: data.limit,
+                keyword: data.keyword,
+                status: data.status,
+                is_pinned: data.isPinned
+            },
+            errors: {
+                422: 'Validation Error'
+            }
+        });
+    }
+
+    /**
+     * Createbulletin
+     * @param data The data for the request.
+     * @param data.requestBody
+     * @returns BulletinPostPublic Successful Response
+     * @throws ApiError
+     */
+    public static createBulletin(data: BulletinsCreateBulletinData): CancelablePromise<BulletinsCreateBulletinResponse> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/api/v1/bulletins/',
+            body: data.requestBody,
+            mediaType: 'application/json',
+            errors: {
+                422: 'Validation Error'
+            }
+        });
+    }
+
+    /**
+     * Readbulletin
+     * @param data The data for the request.
+     * @param data.id
+     * @returns BulletinPostPublic Successful Response
+     * @throws ApiError
+     */
+    public static readBulletin(data: BulletinsReadBulletinData): CancelablePromise<BulletinsReadBulletinResponse> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/api/v1/bulletins/{id}',
+            path: {
+                id: data.id
+            },
+            errors: {
+                422: 'Validation Error'
+            }
+        });
+    }
+
+    /**
+     * Updatebulletin
+     * @param data The data for the request.
+     * @param data.id
+     * @param data.requestBody
+     * @returns BulletinPostPublic Successful Response
+     * @throws ApiError
+     */
+    public static updateBulletin(data: BulletinsUpdateBulletinData): CancelablePromise<BulletinsUpdateBulletinResponse> {
+        return __request(OpenAPI, {
+            method: 'PATCH',
+            url: '/api/v1/bulletins/{id}',
+            path: {
+                id: data.id
+            },
+            body: data.requestBody,
+            mediaType: 'application/json',
+            errors: {
+                422: 'Validation Error'
+            }
+        });
+    }
+
+    /**
+     * Uploadbulletinasset
+     * @param data The data for the request.
+     * @param data.id
+     * @param data.formData
+     * @returns BulletinAssetPublic Successful Response
+     * @throws ApiError
+     */
+    public static uploadBulletinAsset(data: BulletinsUploadBulletinAssetData): CancelablePromise<BulletinsUploadBulletinAssetResponse> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/api/v1/bulletins/{id}/assets',
+            path: {
+                id: data.id
+            },
+            formData: data.formData,
+            mediaType: 'multipart/form-data',
+            errors: {
+                422: 'Validation Error'
+            }
+        });
+    }
+}
 
 export class HelloService {
     /**
@@ -1273,6 +1388,72 @@ export class PrivateService {
             url: '/api/v1/private/users/',
             body: data.requestBody,
             mediaType: 'application/json',
+            errors: {
+                422: 'Validation Error'
+            }
+        });
+    }
+}
+
+export class PublicBulletinsService {
+    /**
+     * Readpublicbulletins
+     * @param data The data for the request.
+     * @param data.skip
+     * @param data.limit
+     * @param data.keyword
+     * @returns BulletinPostsPublic Successful Response
+     * @throws ApiError
+     */
+    public static readPublicBulletins(data: PublicBulletinsReadPublicBulletinsData = {}): CancelablePromise<PublicBulletinsReadPublicBulletinsResponse> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/api/v1/public/bulletins',
+            query: {
+                skip: data.skip,
+                limit: data.limit,
+                keyword: data.keyword
+            },
+            errors: {
+                422: 'Validation Error'
+            }
+        });
+    }
+
+    /**
+     * Readpublicbulletin
+     * @param data The data for the request.
+     * @param data.id
+     * @returns BulletinPostPublic Successful Response
+     * @throws ApiError
+     */
+    public static readPublicBulletin(data: PublicBulletinsReadPublicBulletinData): CancelablePromise<PublicBulletinsReadPublicBulletinResponse> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/api/v1/public/bulletins/{id}',
+            path: {
+                id: data.id
+            },
+            errors: {
+                422: 'Validation Error'
+            }
+        });
+    }
+
+    /**
+     * Readpublicbulletinasset
+     * @param data The data for the request.
+     * @param data.id
+     * @returns unknown Successful Response
+     * @throws ApiError
+     */
+    public static readPublicBulletinAsset(data: PublicBulletinsReadPublicBulletinAssetData): CancelablePromise<PublicBulletinsReadPublicBulletinAssetResponse> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/api/v1/public/bulletin-assets/{id}/content',
+            path: {
+                id: data.id
+            },
             errors: {
                 422: 'Validation Error'
             }

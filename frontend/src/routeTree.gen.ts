@@ -18,6 +18,7 @@ import { Route as LayoutIndexRouteImport } from './routes/_layout/index'
 import { Route as LayoutTestTab2RouteImport } from './routes/_layout/test-tab2'
 import { Route as LayoutTestTabRouteImport } from './routes/_layout/test-tab'
 import { Route as LayoutSettingsRouteImport } from './routes/_layout/settings'
+import { Route as LayoutBulletinsRouteImport } from './routes/_layout/bulletins'
 import { Route as LayoutAdminRouteImport } from './routes/_layout/admin'
 import { Route as LayoutSplatRouteImport } from './routes/_layout/$'
 import { Route as LayoutTableDemosIndexRouteImport } from './routes/_layout/table-demos/index'
@@ -69,6 +70,11 @@ const LayoutTestTabRoute = LayoutTestTabRouteImport.update({
 const LayoutSettingsRoute = LayoutSettingsRouteImport.update({
   id: '/settings',
   path: '/settings',
+  getParentRoute: () => LayoutRoute,
+} as any)
+const LayoutBulletinsRoute = LayoutBulletinsRouteImport.update({
+  id: '/bulletins',
+  path: '/bulletins',
   getParentRoute: () => LayoutRoute,
 } as any)
 const LayoutAdminRoute = LayoutAdminRouteImport.update({
@@ -125,6 +131,7 @@ export interface FileRoutesByFullPath {
   '/signup': typeof SignupRoute
   '/$': typeof LayoutSplatRoute
   '/admin': typeof LayoutAdminRoute
+  '/bulletins': typeof LayoutBulletinsRoute
   '/settings': typeof LayoutSettingsRoute
   '/test-tab': typeof LayoutTestTabRoute
   '/test-tab2': typeof LayoutTestTab2Route
@@ -142,6 +149,7 @@ export interface FileRoutesByTo {
   '/signup': typeof SignupRoute
   '/$': typeof LayoutSplatRoute
   '/admin': typeof LayoutAdminRoute
+  '/bulletins': typeof LayoutBulletinsRoute
   '/settings': typeof LayoutSettingsRoute
   '/test-tab': typeof LayoutTestTabRoute
   '/test-tab2': typeof LayoutTestTab2Route
@@ -162,6 +170,7 @@ export interface FileRoutesById {
   '/signup': typeof SignupRoute
   '/_layout/$': typeof LayoutSplatRoute
   '/_layout/admin': typeof LayoutAdminRoute
+  '/_layout/bulletins': typeof LayoutBulletinsRoute
   '/_layout/settings': typeof LayoutSettingsRoute
   '/_layout/test-tab': typeof LayoutTestTabRoute
   '/_layout/test-tab2': typeof LayoutTestTab2Route
@@ -183,6 +192,7 @@ export interface FileRouteTypes {
     | '/signup'
     | '/$'
     | '/admin'
+    | '/bulletins'
     | '/settings'
     | '/test-tab'
     | '/test-tab2'
@@ -200,6 +210,7 @@ export interface FileRouteTypes {
     | '/signup'
     | '/$'
     | '/admin'
+    | '/bulletins'
     | '/settings'
     | '/test-tab'
     | '/test-tab2'
@@ -219,6 +230,7 @@ export interface FileRouteTypes {
     | '/signup'
     | '/_layout/$'
     | '/_layout/admin'
+    | '/_layout/bulletins'
     | '/_layout/settings'
     | '/_layout/test-tab'
     | '/_layout/test-tab2'
@@ -304,6 +316,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LayoutSettingsRouteImport
       parentRoute: typeof LayoutRoute
     }
+    '/_layout/bulletins': {
+      id: '/_layout/bulletins'
+      path: '/bulletins'
+      fullPath: '/bulletins'
+      preLoaderRoute: typeof LayoutBulletinsRouteImport
+      parentRoute: typeof LayoutRoute
+    }
     '/_layout/admin': {
       id: '/_layout/admin'
       path: '/admin'
@@ -366,6 +385,7 @@ declare module '@tanstack/react-router' {
 interface LayoutRouteChildren {
   LayoutSplatRoute: typeof LayoutSplatRoute
   LayoutAdminRoute: typeof LayoutAdminRoute
+  LayoutBulletinsRoute: typeof LayoutBulletinsRoute
   LayoutSettingsRoute: typeof LayoutSettingsRoute
   LayoutTestTabRoute: typeof LayoutTestTabRoute
   LayoutTestTab2Route: typeof LayoutTestTab2Route
@@ -381,6 +401,7 @@ interface LayoutRouteChildren {
 const LayoutRouteChildren: LayoutRouteChildren = {
   LayoutSplatRoute: LayoutSplatRoute,
   LayoutAdminRoute: LayoutAdminRoute,
+  LayoutBulletinsRoute: LayoutBulletinsRoute,
   LayoutSettingsRoute: LayoutSettingsRoute,
   LayoutTestTabRoute: LayoutTestTabRoute,
   LayoutTestTab2Route: LayoutTestTab2Route,

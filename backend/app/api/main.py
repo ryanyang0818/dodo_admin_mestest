@@ -1,6 +1,7 @@
 from fastapi import APIRouter
 
 from app.api.routes import (
+    bulletins,
     database_mes_dictionary,
     database_tt_dictionary,
     erp_menu_readonly,
@@ -10,17 +11,17 @@ from app.api.routes import (
     items,
     login,
     menus,
+    mes_inspection_query,
     mes_user_report,
     mes_wo_report,
     mes_work_report,
-    mes_inspection_query,
     private,
+    role_report,
     system_menus,
     test,
     todo_report,
     todos,
     user_report,
-    role_report,
     users,
     utils,
 )
@@ -28,10 +29,12 @@ from app.core.config import settings
 
 api_router = APIRouter()
 api_router.include_router(login.router)
+api_router.include_router(bulletins.public_router)
 api_router.include_router(users.router)
 api_router.include_router(utils.router)
 api_router.include_router(items.router)
 api_router.include_router(todos.router)
+api_router.include_router(bulletins.router)
 api_router.include_router(todo_report.router)
 api_router.include_router(menus.router)
 api_router.include_router(system_menus.router)

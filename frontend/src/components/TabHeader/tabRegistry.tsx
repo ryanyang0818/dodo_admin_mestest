@@ -1,9 +1,8 @@
 import type { ComponentType } from "react"
 
 import { AdminView } from "@/components/Admin/AdminView"
+import { BulletinManager } from "@/components/Bulletins/BulletinManager"
 import { DashboardView } from "@/components/Dashboard/DashboardView"
-import { TtDictionary } from "@/components/TtDictionary/TtDictionary"
-import { MesDictionary } from "@/components/MesDictionary/MesDictionary"
 import { ErpMenuReadonly } from "@/components/ErpMenuReadonly/ErpMenuReadonly"
 import { ErpSlipReadonly } from "@/components/ErpSlipReadonly/ErpSlipReadonly"
 import { ErpWoReadonly } from "@/components/ErpWoReadonly/ErpWoReadonly"
@@ -11,14 +10,16 @@ import { ItemsView } from "@/components/Items/ItemsView"
 import { ItemsCRUD } from "@/components/ItemsCRUD/ItemsCRUD"
 import { MasterDetailDemo } from "@/components/MasterDetailDemo/MasterDetailDemo"
 import { MenusCRUDV2 } from "@/components/MenusCRUDV2/MenusCRUDV2"
+import { MesDictionary } from "@/components/MesDictionary/MesDictionary"
+import { MesInspectionQuery } from "@/components/MesInspectionQuery/MesInspectionQuery"
 import { MesUserView } from "@/components/MesUser/MesUserView"
 import { MesWoReport } from "@/components/MesWoReport/MesWoReport"
 import { MesWorkReport } from "@/components/MesWorkReport/MesWorkReport"
-import { MesInspectionQuery } from "@/components/MesInspectionQuery/MesInspectionQuery"
 import { RoleReport } from "@/components/RoleReport/RoleReport"
 import type { TabKey } from "@/components/TabHeader/types"
 import { TodoReport } from "@/components/TodoReport/TodoReport"
 import { TodosView } from "@/components/Todos/TodosView"
+import { TtDictionary } from "@/components/TtDictionary/TtDictionary"
 import { UserReport } from "@/components/UserReport/UserReport"
 
 // 單一頁籤種類的定義：只保存前端元件；標題與 icon 以 Menu API 為準。
@@ -36,6 +37,9 @@ export const tabRegistry: Record<TabKey, TabDefinition> = {
   },
   todos: {
     component: TodosView,
+  },
+  bulletins: {
+    component: BulletinManager,
   },
   "todo-report": {
     component: TodoReport,

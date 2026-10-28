@@ -33,12 +33,24 @@ export function DashboardView() {
           Hello, {currentUser?.full_name || currentUser?.email} 👋
         </h1>
         <p className="text-muted-foreground">
-          Welcome back, nice to see you again!!!
-          &熱重載測試成功！
+          Welcome back, nice to see you again!!! &熱重載測試成功！
         </p>
       </div>
 
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">
+        <Link to="/bulletins" className="group">
+          <Card className="h-full transition-colors group-hover:border-primary/50 group-hover:bg-muted/40">
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2 text-base">
+                <Megaphone className="size-4 text-muted-foreground" />
+                佈告欄管理
+              </CardTitle>
+              <CardDescription>
+                建立、編輯、發布及封存顯示在登入頁面的公開公告。
+              </CardDescription>
+            </CardHeader>
+          </Card>
+        </Link>
         <Link to="/table-demos" className="group">
           <Card className="h-full transition-colors group-hover:border-primary/50 group-hover:bg-muted/40">
             <CardHeader>

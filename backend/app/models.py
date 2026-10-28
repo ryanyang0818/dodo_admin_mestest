@@ -2,9 +2,10 @@ import re
 import uuid
 from datetime import date, datetime, timezone
 from enum import Enum
+from typing import Any
 
 from pydantic import EmailStr, field_validator
-from sqlalchemy import JSON, Column, DateTime, UniqueConstraint, text
+from sqlalchemy import JSON, Column, DateTime, UnicodeText, UniqueConstraint, text
 from sqlmodel import Field, Relationship, SQLModel
 
 
@@ -398,6 +399,136 @@ class TodoPublic(TodoBase):
 class TodosPublic(SQLModel):
     data: list[TodoPublic]
     count: int
+
+
+# 佈告欄文章狀態
+class BulletinStatus(str, Enum):
+    draft = "draft"
+    published = "published"
+    archived = "archived"
+
+
+# 佈告欄共用欄位
+class BulletinPostBase(SQLModel):
+    title: str = Field(min_length=1, max_length=200)
+    summary: str | None = Field(default=None, max_length=500)
+    publisher_unit: str = Field(min_length=1, max_length=100)
+    content_json: dict[str, Any] = Field(
+        default_factory=lambda: {"type": "doc", "content": [{"type": "paragraph"}]},
+        sa_column=Column(JSON, nullable=False),
+    )
+    status: BulletinStatus = Field(default=BulletinStatus.draft, max_length=20)
+    is_pinned: bool = Field(default=False)
+    pin_order: int = Field(default=0, ge=0)
+    publish_at: datetime | None = Field(
+        default=None,
+        sa_column=Column(DateTime(timezone=True), nullable=True),
+    )
+    expire_at: datetime | None = Field(
+        default=None,
+        sa_column=Column(DateTime(timezone=True), nullable=True),
+    )
+
+
+# 建立佈告欄文章
+class BulletinPostCreate(BulletinPostBase):
+    pass
+
+
+# 更新佈告欄文章
+class BulletinPostUpdate(SQLModel):
+    title: str | None = Field(default=None, min_length=1, max_length=200)
+    summary: str | None = Field(default=None, max_length=500)
+    publisher_unit: str | None = Field(default=None, min_length=1, max_length=100)
+    content_json: dict[str, Any] | None = None
+    status: BulletinStatus | None = None
+    is_pinned: bool | None = None
+    pin_order: int | None = Field(default=None, ge=0)
+    publish_at: datetime | None = None
+    expire_at: datetime | None = None
+
+
+# 佈告欄文章資料表
+class BulletinPost(BulletinPostBase, table=True):
+    __tablename__ = "bulletin_post"
+
+    id: uuid.UUID = Field(default_factory=uuid.uuid4, primary_key=True)
+    content_text: str = Field(
+        default="",
+        sa_column=Column(UnicodeText, nullable=False),
+    )
+    author_id: uuid.UUID = Field(foreign_key="user.id", nullable=False)
+    updated_by: uuid.UUID = Field(foreign_key="user.id", nullable=False)
+    created_at: datetime = Field(
+        default_factory=get_datetime_utc,
+        sa_column=Column(
+            DateTime(timezone=True),
+            nullable=False,
+            server_default=text("SYSUTCDATETIME()"),
+        ),
+    )
+    updated_at: datetime = Field(
+        default_factory=get_datetime_utc,
+        sa_column=Column(
+            DateTime(timezone=True),
+            nullable=False,
+            server_default=text("SYSUTCDATETIME()"),
+        ),
+    )
+
+
+# 對外回傳佈告欄文章
+class BulletinPostPublic(BulletinPostBase):
+    id: uuid.UUID
+    content_text: str
+    author_id: uuid.UUID
+    author_name: str
+    updated_by: uuid.UUID
+    created_at: datetime
+    updated_at: datetime
+
+
+# 對外回傳佈告欄列表
+class BulletinPostsPublic(SQLModel):
+    data: list[BulletinPostPublic]
+    count: int
+
+
+# 佈告欄圖片資料表
+class BulletinAsset(SQLModel, table=True):
+    __tablename__ = "bulletin_asset"
+
+    id: uuid.UUID = Field(default_factory=uuid.uuid4, primary_key=True)
+    post_id: uuid.UUID = Field(foreign_key="bulletin_post.id", nullable=False)
+    storage_key: str = Field(unique=True, max_length=500)
+    original_filename: str = Field(max_length=255)
+    mime_type: str = Field(max_length=100)
+    size_bytes: int = Field(ge=0)
+    width: int | None = Field(default=None, ge=1)
+    height: int | None = Field(default=None, ge=1)
+    alt_text: str | None = Field(default=None, max_length=300)
+    created_by: uuid.UUID = Field(foreign_key="user.id", nullable=False)
+    created_at: datetime = Field(
+        default_factory=get_datetime_utc,
+        sa_column=Column(
+            DateTime(timezone=True),
+            nullable=False,
+            server_default=text("SYSUTCDATETIME()"),
+        ),
+    )
+
+
+# 對外回傳佈告欄圖片資訊
+class BulletinAssetPublic(SQLModel):
+    id: uuid.UUID
+    post_id: uuid.UUID
+    url: str
+    original_filename: str
+    mime_type: str
+    size_bytes: int
+    width: int | None = None
+    height: int | None = None
+    alt_text: str | None = None
 
 
 # Generic message

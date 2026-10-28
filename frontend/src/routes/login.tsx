@@ -8,6 +8,7 @@ import { useForm } from "react-hook-form"
 import { z } from "zod"
 
 import type { Body_login_login_access_token as AccessToken } from "@/client"
+import { PublicBulletinBoard } from "@/components/Bulletins/PublicBulletinBoard"
 import { AuthLayout } from "@/components/Common/AuthLayout"
 import {
   Form,
@@ -68,7 +69,7 @@ function Login() {
   }
 
   return (
-    <AuthLayout>
+    <AuthLayout aside={<PublicBulletinBoard />}>
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}

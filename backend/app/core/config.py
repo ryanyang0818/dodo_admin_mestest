@@ -60,6 +60,8 @@ class Settings(BaseSettings):
     DB_ENCRYPT: bool = True
     DB_TRUST_SERVER_CERTIFICATE: bool = True
     DB_QUERY_TIMEOUT: int = 15
+    BULLETIN_UPLOAD_DIR: str = "upload/bulletins"
+    BULLETIN_MAX_IMAGE_BYTES: int = 5 * 1024 * 1024
 
     @computed_field  # type: ignore[prop-decorator]
     @property
