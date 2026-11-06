@@ -1,8 +1,8 @@
 import type { ComponentType } from "react"
-
 import { AdminView } from "@/components/Admin/AdminView"
 import { BulletinManager } from "@/components/Bulletins/BulletinManager"
 import { DashboardView } from "@/components/Dashboard/DashboardView"
+import { ErpItemReadonly } from "@/components/ErpItemReadonly/ErpItemReadonly"
 import { ErpMenuReadonly } from "@/components/ErpMenuReadonly/ErpMenuReadonly"
 import { ErpSlipReadonly } from "@/components/ErpSlipReadonly/ErpSlipReadonly"
 import { ErpWoReadonly } from "@/components/ErpWoReadonly/ErpWoReadonly"
@@ -29,6 +29,7 @@ type TabDefinition = {
 
 // 頁籤種類對照表：Menu API key → 前端內容元件。
 export const tabRegistry: Record<TabKey, TabDefinition> = {
+  "erp.item-readonly": { component: ErpItemReadonly },
   dashboard: {
     component: DashboardView,
   },

@@ -15,6 +15,7 @@ import { Route as RecoverPasswordRouteImport } from './routes/recover-password'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as LayoutRouteImport } from './routes/_layout'
 import { Route as LayoutIndexRouteImport } from './routes/_layout/index'
+import { Route as ErpItemReadonlyRouteImport } from './routes/erp.item-readonly'
 import { Route as LayoutTestTab2RouteImport } from './routes/_layout/test-tab2'
 import { Route as LayoutTestTabRouteImport } from './routes/_layout/test-tab'
 import { Route as LayoutSettingsRouteImport } from './routes/_layout/settings'
@@ -56,6 +57,11 @@ const LayoutIndexRoute = LayoutIndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => LayoutRoute,
+} as any)
+const ErpItemReadonlyRoute = ErpItemReadonlyRouteImport.update({
+  id: '/erp/item-readonly',
+  path: '/erp/item-readonly',
+  getParentRoute: () => rootRouteImport,
 } as any)
 const LayoutTestTab2Route = LayoutTestTab2RouteImport.update({
   id: '/test-tab2',
@@ -135,6 +141,7 @@ export interface FileRoutesByFullPath {
   '/settings': typeof LayoutSettingsRoute
   '/test-tab': typeof LayoutTestTabRoute
   '/test-tab2': typeof LayoutTestTab2Route
+  '/erp/item-readonly': typeof ErpItemReadonlyRoute
   '/table-demos/editable-pagination': typeof LayoutTableDemosEditablePaginationRoute
   '/table-demos/expanding-grouping': typeof LayoutTableDemosExpandingGroupingRoute
   '/table-demos/pinning-sizing': typeof LayoutTableDemosPinningSizingRoute
@@ -153,6 +160,7 @@ export interface FileRoutesByTo {
   '/settings': typeof LayoutSettingsRoute
   '/test-tab': typeof LayoutTestTabRoute
   '/test-tab2': typeof LayoutTestTab2Route
+  '/erp/item-readonly': typeof ErpItemReadonlyRoute
   '/': typeof LayoutIndexRoute
   '/table-demos/editable-pagination': typeof LayoutTableDemosEditablePaginationRoute
   '/table-demos/expanding-grouping': typeof LayoutTableDemosExpandingGroupingRoute
@@ -174,6 +182,7 @@ export interface FileRoutesById {
   '/_layout/settings': typeof LayoutSettingsRoute
   '/_layout/test-tab': typeof LayoutTestTabRoute
   '/_layout/test-tab2': typeof LayoutTestTab2Route
+  '/erp/item-readonly': typeof ErpItemReadonlyRoute
   '/_layout/': typeof LayoutIndexRoute
   '/_layout/table-demos/editable-pagination': typeof LayoutTableDemosEditablePaginationRoute
   '/_layout/table-demos/expanding-grouping': typeof LayoutTableDemosExpandingGroupingRoute
@@ -196,6 +205,7 @@ export interface FileRouteTypes {
     | '/settings'
     | '/test-tab'
     | '/test-tab2'
+    | '/erp/item-readonly'
     | '/table-demos/editable-pagination'
     | '/table-demos/expanding-grouping'
     | '/table-demos/pinning-sizing'
@@ -214,6 +224,7 @@ export interface FileRouteTypes {
     | '/settings'
     | '/test-tab'
     | '/test-tab2'
+    | '/erp/item-readonly'
     | '/'
     | '/table-demos/editable-pagination'
     | '/table-demos/expanding-grouping'
@@ -234,6 +245,7 @@ export interface FileRouteTypes {
     | '/_layout/settings'
     | '/_layout/test-tab'
     | '/_layout/test-tab2'
+    | '/erp/item-readonly'
     | '/_layout/'
     | '/_layout/table-demos/editable-pagination'
     | '/_layout/table-demos/expanding-grouping'
@@ -249,6 +261,7 @@ export interface RootRouteChildren {
   RecoverPasswordRoute: typeof RecoverPasswordRoute
   ResetPasswordRoute: typeof ResetPasswordRoute
   SignupRoute: typeof SignupRoute
+  ErpItemReadonlyRoute: typeof ErpItemReadonlyRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -294,6 +307,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/'
       preLoaderRoute: typeof LayoutIndexRouteImport
       parentRoute: typeof LayoutRoute
+    }
+    '/erp/item-readonly': {
+      id: '/erp/item-readonly'
+      path: '/erp/item-readonly'
+      fullPath: '/erp/item-readonly'
+      preLoaderRoute: typeof ErpItemReadonlyRouteImport
+      parentRoute: typeof rootRouteImport
     }
     '/_layout/test-tab2': {
       id: '/_layout/test-tab2'
@@ -426,6 +446,7 @@ const rootRouteChildren: RootRouteChildren = {
   RecoverPasswordRoute: RecoverPasswordRoute,
   ResetPasswordRoute: ResetPasswordRoute,
   SignupRoute: SignupRoute,
+  ErpItemReadonlyRoute: ErpItemReadonlyRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

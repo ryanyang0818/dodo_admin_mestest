@@ -1027,6 +1027,1031 @@ export const ItemCreateSchema = {
     title: 'ItemCreate'
 } as const;
 
+export const ItemDetailSchema = {
+    "properties": {
+        "part_no": {
+            "title": "Part No",
+            "type": "string"
+        },
+        "name": {
+            "anyOf": [
+                {
+                    "type": "string"
+                },
+                {
+                    "type": "null"
+                }
+            ],
+            "default": null,
+            "title": "Name"
+        },
+        "specification": {
+            "anyOf": [
+                {
+                    "type": "string"
+                },
+                {
+                    "type": "null"
+                }
+            ],
+            "default": null,
+            "title": "Specification"
+        },
+        "group_code": {
+            "anyOf": [
+                {
+                    "type": "string"
+                },
+                {
+                    "type": "null"
+                }
+            ],
+            "default": null,
+            "title": "Group Code"
+        },
+        "group_name": {
+            "anyOf": [
+                {
+                    "type": "string"
+                },
+                {
+                    "type": "null"
+                }
+            ],
+            "default": null,
+            "title": "Group Name"
+        },
+        "source": {
+            "anyOf": [
+                {
+                    "type": "string"
+                },
+                {
+                    "type": "null"
+                }
+            ],
+            "default": null,
+            "title": "Source"
+        },
+        "status": {
+            "anyOf": [
+                {
+                    "type": "string"
+                },
+                {
+                    "type": "null"
+                }
+            ],
+            "default": null,
+            "title": "Status"
+        },
+        "processing": {
+            "anyOf": [
+                {
+                    "type": "string"
+                },
+                {
+                    "type": "null"
+                }
+            ],
+            "default": null,
+            "title": "Processing"
+        },
+        "vendor_control": {
+            "anyOf": [
+                {
+                    "type": "string"
+                },
+                {
+                    "type": "null"
+                }
+            ],
+            "default": null,
+            "title": "Vendor Control"
+        },
+        "origin": {
+            "anyOf": [
+                {
+                    "type": "string"
+                },
+                {
+                    "type": "null"
+                }
+            ],
+            "default": null,
+            "title": "Origin"
+        },
+        "software_object": {
+            "anyOf": [
+                {
+                    "type": "string"
+                },
+                {
+                    "type": "null"
+                }
+            ],
+            "default": null,
+            "title": "Software Object"
+        },
+        "engineering_item": {
+            "anyOf": [
+                {
+                    "type": "string"
+                },
+                {
+                    "type": "null"
+                }
+            ],
+            "default": null,
+            "title": "Engineering Item"
+        },
+        "auto_plugin_position": {
+            "anyOf": [
+                {
+                    "type": "string"
+                },
+                {
+                    "type": "null"
+                }
+            ],
+            "default": null,
+            "title": "Auto Plugin Position"
+        },
+        "plugin_qpa_check": {
+            "anyOf": [
+                {
+                    "type": "string"
+                },
+                {
+                    "type": "null"
+                }
+            ],
+            "default": null,
+            "title": "Plugin Qpa Check"
+        },
+        "co_product": {
+            "anyOf": [
+                {
+                    "type": "string"
+                },
+                {
+                    "type": "null"
+                }
+            ],
+            "default": null,
+            "title": "Co Product"
+        },
+        "inspection": {
+            "anyOf": [
+                {
+                    "type": "string"
+                },
+                {
+                    "type": "null"
+                }
+            ],
+            "default": null,
+            "title": "Inspection"
+        },
+        "repetitive_production": {
+            "anyOf": [
+                {
+                    "type": "string"
+                },
+                {
+                    "type": "null"
+                }
+            ],
+            "default": null,
+            "title": "Repetitive Production"
+        },
+        "material_category": {
+            "anyOf": [
+                {
+                    "type": "string"
+                },
+                {
+                    "type": "null"
+                }
+            ],
+            "default": null,
+            "title": "Material Category"
+        },
+        "abc_code": {
+            "anyOf": [
+                {
+                    "type": "string"
+                },
+                {
+                    "type": "null"
+                }
+            ],
+            "default": null,
+            "title": "Abc Code"
+        },
+        "consumable": {
+            "anyOf": [
+                {
+                    "type": "string"
+                },
+                {
+                    "type": "null"
+                }
+            ],
+            "default": null,
+            "title": "Consumable"
+        },
+        "replenishment_strategy": {
+            "anyOf": [
+                {
+                    "type": "string"
+                },
+                {
+                    "type": "null"
+                }
+            ],
+            "default": null,
+            "title": "Replenishment Strategy"
+        },
+        "economic_order_qty": {
+            "anyOf": [
+                {
+                    "type": "number"
+                },
+                {
+                    "type": "null"
+                }
+            ],
+            "default": null,
+            "title": "Economic Order Qty"
+        },
+        "average_order_qty": {
+            "anyOf": [
+                {
+                    "type": "number"
+                },
+                {
+                    "type": "null"
+                }
+            ],
+            "default": null,
+            "title": "Average Order Qty"
+        },
+        "safety_stock": {
+            "anyOf": [
+                {
+                    "type": "number"
+                },
+                {
+                    "type": "null"
+                }
+            ],
+            "default": null,
+            "title": "Safety Stock"
+        },
+        "safety_period": {
+            "anyOf": [
+                {
+                    "type": "number"
+                },
+                {
+                    "type": "null"
+                }
+            ],
+            "default": null,
+            "title": "Safety Period"
+        },
+        "max_stock": {
+            "anyOf": [
+                {
+                    "type": "number"
+                },
+                {
+                    "type": "null"
+                }
+            ],
+            "default": null,
+            "title": "Max Stock"
+        },
+        "shelf_life_days": {
+            "anyOf": [
+                {
+                    "type": "number"
+                },
+                {
+                    "type": "null"
+                }
+            ],
+            "default": null,
+            "title": "Shelf Life Days"
+        },
+        "stock_unit": {
+            "anyOf": [
+                {
+                    "type": "string"
+                },
+                {
+                    "type": "null"
+                }
+            ],
+            "default": null,
+            "title": "Stock Unit"
+        },
+        "primary_warehouse": {
+            "anyOf": [
+                {
+                    "type": "string"
+                },
+                {
+                    "type": "null"
+                }
+            ],
+            "default": null,
+            "title": "Primary Warehouse"
+        },
+        "primary_location": {
+            "anyOf": [
+                {
+                    "type": "string"
+                },
+                {
+                    "type": "null"
+                }
+            ],
+            "default": null,
+            "title": "Primary Location"
+        },
+        "warehouse_keeper": {
+            "anyOf": [
+                {
+                    "type": "string"
+                },
+                {
+                    "type": "null"
+                }
+            ],
+            "default": null,
+            "title": "Warehouse Keeper"
+        },
+        "warehouse_keeper_name": {
+            "anyOf": [
+                {
+                    "type": "string"
+                },
+                {
+                    "type": "null"
+                }
+            ],
+            "default": null,
+            "title": "Warehouse Keeper Name"
+        },
+        "lot_control": {
+            "anyOf": [
+                {
+                    "type": "string"
+                },
+                {
+                    "type": "null"
+                }
+            ],
+            "default": null,
+            "title": "Lot Control"
+        },
+        "pallet_full_qty": {
+            "anyOf": [
+                {
+                    "type": "number"
+                },
+                {
+                    "type": "null"
+                }
+            ],
+            "default": null,
+            "title": "Pallet Full Qty"
+        },
+        "manufacturing_lot_control": {
+            "anyOf": [
+                {
+                    "type": "string"
+                },
+                {
+                    "type": "null"
+                }
+            ],
+            "default": null,
+            "title": "Manufacturing Lot Control"
+        },
+        "manufacturing_lot_auto_number": {
+            "anyOf": [
+                {
+                    "type": "string"
+                },
+                {
+                    "type": "null"
+                }
+            ],
+            "default": null,
+            "title": "Manufacturing Lot Auto Number"
+        },
+        "manufacturing_lot_rule": {
+            "anyOf": [
+                {
+                    "type": "string"
+                },
+                {
+                    "type": "null"
+                }
+            ],
+            "default": null,
+            "title": "Manufacturing Lot Rule"
+        },
+        "serial_control": {
+            "anyOf": [
+                {
+                    "type": "string"
+                },
+                {
+                    "type": "null"
+                }
+            ],
+            "default": null,
+            "title": "Serial Control"
+        },
+        "serial_auto_number": {
+            "anyOf": [
+                {
+                    "type": "string"
+                },
+                {
+                    "type": "null"
+                }
+            ],
+            "default": null,
+            "title": "Serial Auto Number"
+        },
+        "serial_rule": {
+            "anyOf": [
+                {
+                    "type": "string"
+                },
+                {
+                    "type": "null"
+                }
+            ],
+            "default": null,
+            "title": "Serial Rule"
+        },
+        "serial_unique": {
+            "anyOf": [
+                {
+                    "type": "string"
+                },
+                {
+                    "type": "null"
+                }
+            ],
+            "default": null,
+            "title": "Serial Unique"
+        },
+        "lot_sort_method": {
+            "anyOf": [
+                {
+                    "type": "string"
+                },
+                {
+                    "type": "null"
+                }
+            ],
+            "default": null,
+            "title": "Lot Sort Method"
+        },
+        "brand_code": {
+            "anyOf": [
+                {
+                    "type": "string"
+                },
+                {
+                    "type": "null"
+                }
+            ],
+            "default": null,
+            "title": "Brand Code"
+        },
+        "series_code": {
+            "anyOf": [
+                {
+                    "type": "string"
+                },
+                {
+                    "type": "null"
+                }
+            ],
+            "default": null,
+            "title": "Series Code"
+        },
+        "manufacturer": {
+            "anyOf": [
+                {
+                    "type": "string"
+                },
+                {
+                    "type": "null"
+                }
+            ],
+            "default": null,
+            "title": "Manufacturer"
+        },
+        "brand_name": {
+            "anyOf": [
+                {
+                    "type": "string"
+                },
+                {
+                    "type": "null"
+                }
+            ],
+            "default": null,
+            "title": "Brand Name"
+        },
+        "series_name": {
+            "anyOf": [
+                {
+                    "type": "string"
+                },
+                {
+                    "type": "null"
+                }
+            ],
+            "default": null,
+            "title": "Series Name"
+        },
+        "cost_group": {
+            "anyOf": [
+                {
+                    "type": "string"
+                },
+                {
+                    "type": "null"
+                }
+            ],
+            "default": null,
+            "title": "Cost Group"
+        },
+        "account_code": {
+            "anyOf": [
+                {
+                    "type": "string"
+                },
+                {
+                    "type": "null"
+                }
+            ],
+            "default": null,
+            "title": "Account Code"
+        },
+        "bonded_item": {
+            "anyOf": [
+                {
+                    "type": "string"
+                },
+                {
+                    "type": "null"
+                }
+            ],
+            "default": null,
+            "title": "Bonded Item"
+        },
+        "bom_changed": {
+            "anyOf": [
+                {
+                    "type": "string"
+                },
+                {
+                    "type": "null"
+                }
+            ],
+            "default": null,
+            "title": "Bom Changed"
+        },
+        "low_level_code": {
+            "anyOf": [
+                {
+                    "type": "integer"
+                },
+                {
+                    "type": "null"
+                }
+            ],
+            "default": null,
+            "title": "Low Level Code"
+        },
+        "monthly_joint_product": {
+            "anyOf": [
+                {
+                    "type": "string"
+                },
+                {
+                    "type": "null"
+                }
+            ],
+            "default": null,
+            "title": "Monthly Joint Product"
+        },
+        "tax_classification_version": {
+            "anyOf": [
+                {
+                    "type": "string"
+                },
+                {
+                    "type": "null"
+                }
+            ],
+            "default": null,
+            "title": "Tax Classification Version"
+        },
+        "tax_classification_code": {
+            "anyOf": [
+                {
+                    "type": "string"
+                },
+                {
+                    "type": "null"
+                }
+            ],
+            "default": null,
+            "title": "Tax Classification Code"
+        },
+        "other_group_1": {
+            "anyOf": [
+                {
+                    "type": "string"
+                },
+                {
+                    "type": "null"
+                }
+            ],
+            "default": null,
+            "title": "Other Group 1"
+        },
+        "other_group_2": {
+            "anyOf": [
+                {
+                    "type": "string"
+                },
+                {
+                    "type": "null"
+                }
+            ],
+            "default": null,
+            "title": "Other Group 2"
+        },
+        "other_group_3": {
+            "anyOf": [
+                {
+                    "type": "string"
+                },
+                {
+                    "type": "null"
+                }
+            ],
+            "default": null,
+            "title": "Other Group 3"
+        },
+        "quantitative_specification": {
+            "anyOf": [
+                {
+                    "type": "number"
+                },
+                {
+                    "type": "null"
+                }
+            ],
+            "default": null,
+            "title": "Quantitative Specification"
+        },
+        "quantitative_unit": {
+            "anyOf": [
+                {
+                    "type": "string"
+                },
+                {
+                    "type": "null"
+                }
+            ],
+            "default": null,
+            "title": "Quantitative Unit"
+        },
+        "first_created_date": {
+            "anyOf": [
+                {
+                    "format": "date",
+                    "type": "string"
+                },
+                {
+                    "type": "null"
+                }
+            ],
+            "default": null,
+            "title": "First Created Date"
+        },
+        "stagnation_date": {
+            "anyOf": [
+                {
+                    "format": "date",
+                    "type": "string"
+                },
+                {
+                    "type": "null"
+                }
+            ],
+            "default": null,
+            "title": "Stagnation Date"
+        },
+        "opening_stagnation_date": {
+            "anyOf": [
+                {
+                    "format": "date",
+                    "type": "string"
+                },
+                {
+                    "type": "null"
+                }
+            ],
+            "default": null,
+            "title": "Opening Stagnation Date"
+        },
+        "last_purchase_date": {
+            "anyOf": [
+                {
+                    "format": "date",
+                    "type": "string"
+                },
+                {
+                    "type": "null"
+                }
+            ],
+            "default": null,
+            "title": "Last Purchase Date"
+        },
+        "last_receipt_date": {
+            "anyOf": [
+                {
+                    "format": "date",
+                    "type": "string"
+                },
+                {
+                    "type": "null"
+                }
+            ],
+            "default": null,
+            "title": "Last Receipt Date"
+        },
+        "last_issue_date": {
+            "anyOf": [
+                {
+                    "format": "date",
+                    "type": "string"
+                },
+                {
+                    "type": "null"
+                }
+            ],
+            "default": null,
+            "title": "Last Issue Date"
+        },
+        "last_movement_date": {
+            "anyOf": [
+                {
+                    "format": "date",
+                    "type": "string"
+                },
+                {
+                    "type": "null"
+                }
+            ],
+            "default": null,
+            "title": "Last Movement Date"
+        },
+        "last_stocktake_date": {
+            "anyOf": [
+                {
+                    "format": "date",
+                    "type": "string"
+                },
+                {
+                    "type": "null"
+                }
+            ],
+            "default": null,
+            "title": "Last Stocktake Date"
+        },
+        "shipping_valid_days": {
+            "anyOf": [
+                {
+                    "type": "number"
+                },
+                {
+                    "type": "null"
+                }
+            ],
+            "default": null,
+            "title": "Shipping Valid Days"
+        },
+        "combination_item": {
+            "anyOf": [
+                {
+                    "type": "string"
+                },
+                {
+                    "type": "null"
+                }
+            ],
+            "default": null,
+            "title": "Combination Item"
+        },
+        "combination_effective_date": {
+            "anyOf": [
+                {
+                    "format": "date",
+                    "type": "string"
+                },
+                {
+                    "type": "null"
+                }
+            ],
+            "default": null,
+            "title": "Combination Effective Date"
+        },
+        "combination_expiry_date": {
+            "anyOf": [
+                {
+                    "format": "date",
+                    "type": "string"
+                },
+                {
+                    "type": "null"
+                }
+            ],
+            "default": null,
+            "title": "Combination Expiry Date"
+        },
+        "health_insurance_item_no": {
+            "anyOf": [
+                {
+                    "type": "string"
+                },
+                {
+                    "type": "null"
+                }
+            ],
+            "default": null,
+            "title": "Health Insurance Item No"
+        },
+        "health_license_no": {
+            "anyOf": [
+                {
+                    "type": "string"
+                },
+                {
+                    "type": "null"
+                }
+            ],
+            "default": null,
+            "title": "Health License No"
+        },
+        "health_license_expiry_date": {
+            "anyOf": [
+                {
+                    "format": "date",
+                    "type": "string"
+                },
+                {
+                    "type": "null"
+                }
+            ],
+            "default": null,
+            "title": "Health License Expiry Date"
+        },
+        "reinspection_days": {
+            "anyOf": [
+                {
+                    "type": "number"
+                },
+                {
+                    "type": "null"
+                }
+            ],
+            "default": null,
+            "title": "Reinspection Days"
+        },
+        "controlled_drug": {
+            "anyOf": [
+                {
+                    "type": "string"
+                },
+                {
+                    "type": "null"
+                }
+            ],
+            "default": null,
+            "title": "Controlled Drug"
+        },
+        "cold_item": {
+            "anyOf": [
+                {
+                    "type": "string"
+                },
+                {
+                    "type": "null"
+                }
+            ],
+            "default": null,
+            "title": "Cold Item"
+        },
+        "drug_declaration": {
+            "anyOf": [
+                {
+                    "type": "string"
+                },
+                {
+                    "type": "null"
+                }
+            ],
+            "default": null,
+            "title": "Drug Declaration"
+        },
+        "observation_item": {
+            "anyOf": [
+                {
+                    "type": "string"
+                },
+                {
+                    "type": "null"
+                }
+            ],
+            "default": null,
+            "title": "Observation Item"
+        }
+    },
+    "required": [
+        "part_no"
+    ],
+    "title": "ItemDetail",
+    "type": "object"
+} as const;
+
+export const ItemOptionSchema = {
+    properties: {
+        value: {
+            type: 'string',
+            title: 'Value'
+        },
+        label: {
+            type: 'string',
+            title: 'Label'
+        }
+    },
+    type: 'object',
+    required: ['value', 'label'],
+    title: 'ItemOption'
+} as const;
+
+export const ItemOptionsSchema = {
+    properties: {
+        group_code: {
+            items: {
+                '$ref': '#/components/schemas/ItemOption'
+            },
+            type: 'array',
+            title: 'Group Code'
+        },
+        source: {
+            items: {
+                '$ref': '#/components/schemas/ItemOption'
+            },
+            type: 'array',
+            title: 'Source'
+        },
+        status: {
+            items: {
+                '$ref': '#/components/schemas/ItemOption'
+            },
+            type: 'array',
+            title: 'Status'
+        },
+        origin: {
+            items: {
+                '$ref': '#/components/schemas/ItemOption'
+            },
+            type: 'array',
+            title: 'Origin'
+        }
+    },
+    type: 'object',
+    required: ['group_code', 'source', 'status', 'origin'],
+    title: 'ItemOptions'
+} as const;
+
 export const ItemPublicSchema = {
     properties: {
         title: {
@@ -1073,6 +2098,197 @@ export const ItemPublicSchema = {
     type: 'object',
     required: ['title', 'id', 'owner_id'],
     title: 'ItemPublic'
+} as const;
+
+export const ItemReportSchema = {
+    properties: {
+        data: {
+            items: {
+                '$ref': '#/components/schemas/ItemRow'
+            },
+            type: 'array',
+            title: 'Data'
+        },
+        total: {
+            type: 'integer',
+            title: 'Total'
+        },
+        preview: {
+            type: 'boolean',
+            title: 'Preview'
+        },
+        page: {
+            type: 'integer',
+            title: 'Page'
+        },
+        page_size: {
+            type: 'integer',
+            title: 'Page Size'
+        }
+    },
+    type: 'object',
+    required: ['data', 'total', 'preview', 'page', 'page_size'],
+    title: 'ItemReport'
+} as const;
+
+export const ItemRowSchema = {
+    properties: {
+        part_no: {
+            type: 'string',
+            title: 'Part No'
+        },
+        name: {
+            anyOf: [
+                {
+                    type: 'string'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Name'
+        },
+        specification: {
+            anyOf: [
+                {
+                    type: 'string'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Specification'
+        },
+        group_code: {
+            anyOf: [
+                {
+                    type: 'string'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Group Code'
+        },
+        group_name: {
+            anyOf: [
+                {
+                    type: 'string'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Group Name'
+        },
+        source: {
+            anyOf: [
+                {
+                    type: 'string'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Source'
+        },
+        sales_characteristic: {
+            anyOf: [
+                {
+                    type: 'string'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Sales Characteristic'
+        },
+        material_category: {
+            anyOf: [
+                {
+                    type: 'string'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Material Category'
+        },
+        stock_unit: {
+            anyOf: [
+                {
+                    type: 'string'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Stock Unit'
+        },
+        replenishment_strategy: {
+            anyOf: [
+                {
+                    type: 'string'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Replenishment Strategy'
+        },
+        status: {
+            anyOf: [
+                {
+                    type: 'string'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Status'
+        },
+        active_code: {
+            anyOf: [
+                {
+                    type: 'string'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Active Code'
+        },
+        origin: {
+            anyOf: [
+                {
+                    type: 'string'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Origin'
+        }
+    },
+    type: 'object',
+    required: ['part_no'],
+    title: 'ItemRow'
+} as const;
+
+export const ItemSqlSchema = {
+    properties: {
+        sql: {
+            type: 'string',
+            title: 'Sql'
+        },
+        empty_page_count_sql: {
+            type: 'string',
+            title: 'Empty Page Count Sql'
+        }
+    },
+    type: 'object',
+    required: ['sql', 'empty_page_count_sql'],
+    title: 'ItemSql'
 } as const;
 
 export const ItemUpdateSchema = {

@@ -191,6 +191,101 @@ export type ItemCreate = {
     description?: (string | null);
 };
 
+export type ItemDetail = {
+    part_no: string;
+    name?: (string | null);
+    specification?: (string | null);
+    group_code?: (string | null);
+    group_name?: (string | null);
+    source?: (string | null);
+    status?: (string | null);
+    processing?: (string | null);
+    vendor_control?: (string | null);
+    origin?: (string | null);
+    software_object?: (string | null);
+    engineering_item?: (string | null);
+    auto_plugin_position?: (string | null);
+    plugin_qpa_check?: (string | null);
+    co_product?: (string | null);
+    inspection?: (string | null);
+    repetitive_production?: (string | null);
+    material_category?: (string | null);
+    abc_code?: (string | null);
+    consumable?: (string | null);
+    replenishment_strategy?: (string | null);
+    economic_order_qty?: (number | null);
+    average_order_qty?: (number | null);
+    safety_stock?: (number | null);
+    safety_period?: (number | null);
+    max_stock?: (number | null);
+    shelf_life_days?: (number | null);
+    stock_unit?: (string | null);
+    primary_warehouse?: (string | null);
+    primary_location?: (string | null);
+    warehouse_keeper?: (string | null);
+    warehouse_keeper_name?: (string | null);
+    lot_control?: (string | null);
+    pallet_full_qty?: (number | null);
+    manufacturing_lot_control?: (string | null);
+    manufacturing_lot_auto_number?: (string | null);
+    manufacturing_lot_rule?: (string | null);
+    serial_control?: (string | null);
+    serial_auto_number?: (string | null);
+    serial_rule?: (string | null);
+    serial_unique?: (string | null);
+    lot_sort_method?: (string | null);
+    brand_code?: (string | null);
+    series_code?: (string | null);
+    manufacturer?: (string | null);
+    brand_name?: (string | null);
+    series_name?: (string | null);
+    cost_group?: (string | null);
+    account_code?: (string | null);
+    bonded_item?: (string | null);
+    bom_changed?: (string | null);
+    low_level_code?: (number | null);
+    monthly_joint_product?: (string | null);
+    tax_classification_version?: (string | null);
+    tax_classification_code?: (string | null);
+    other_group_1?: (string | null);
+    other_group_2?: (string | null);
+    other_group_3?: (string | null);
+    quantitative_specification?: (number | null);
+    quantitative_unit?: (string | null);
+    first_created_date?: (string | null);
+    stagnation_date?: (string | null);
+    opening_stagnation_date?: (string | null);
+    last_purchase_date?: (string | null);
+    last_receipt_date?: (string | null);
+    last_issue_date?: (string | null);
+    last_movement_date?: (string | null);
+    last_stocktake_date?: (string | null);
+    shipping_valid_days?: (number | null);
+    combination_item?: (string | null);
+    combination_effective_date?: (string | null);
+    combination_expiry_date?: (string | null);
+    health_insurance_item_no?: (string | null);
+    health_license_no?: (string | null);
+    health_license_expiry_date?: (string | null);
+    reinspection_days?: (number | null);
+    controlled_drug?: (string | null);
+    cold_item?: (string | null);
+    drug_declaration?: (string | null);
+    observation_item?: (string | null);
+};
+
+export type ItemOption = {
+    value: string;
+    label: string;
+};
+
+export type ItemOptions = {
+    group_code: Array<ItemOption>;
+    source: Array<ItemOption>;
+    status: Array<ItemOption>;
+    origin: Array<ItemOption>;
+};
+
 export type ItemPublic = {
     title: string;
     description?: (string | null);
@@ -199,9 +294,38 @@ export type ItemPublic = {
     created_at?: (string | null);
 };
 
+export type ItemReport = {
+    data: Array<ItemRow>;
+    total: number;
+    preview: boolean;
+    page: number;
+    page_size: number;
+};
+
+export type ItemRow = {
+    part_no: string;
+    name?: (string | null);
+    specification?: (string | null);
+    group_code?: (string | null);
+    group_name?: (string | null);
+    source?: (string | null);
+    sales_characteristic?: (string | null);
+    material_category?: (string | null);
+    stock_unit?: (string | null);
+    replenishment_strategy?: (string | null);
+    status?: (string | null);
+    active_code?: (string | null);
+    origin?: (string | null);
+};
+
 export type ItemsPublic = {
     data: Array<ItemPublic>;
     count: number;
+};
+
+export type ItemSql = {
+    sql: string;
+    empty_page_count_sql: string;
 };
 
 export type ItemUpdate = {
@@ -798,6 +922,62 @@ export type PageDatabaseTtDictionaryReadTtColumnsData = {
 };
 
 export type PageDatabaseTtDictionaryReadTtColumnsResponse = (TtColumnsResponse);
+
+export type PageErpItemReadonlyItemSqlData = {
+    columns?: Array<('part_no' | 'name' | 'specification' | 'group_code' | 'source' | 'sales_characteristic' | 'material_category' | 'stock_unit' | 'replenishment_strategy' | 'status' | 'active_code' | 'origin')>;
+    groupCode?: Array<(string)>;
+    origin?: Array<(string)>;
+    page?: number;
+    pageSize?: number;
+    preview?: boolean;
+    search?: string;
+    sortBy?: 'part_no' | 'name' | 'specification' | 'group_code' | 'source' | 'sales_characteristic' | 'material_category' | 'stock_unit' | 'replenishment_strategy' | 'status' | 'active_code' | 'origin';
+    sortDirection?: 'asc' | 'desc';
+    source?: Array<(string)>;
+    status?: Array<(string)>;
+};
+
+export type PageErpItemReadonlyItemSqlResponse = (ItemSql);
+
+export type PageErpItemReadonlyReadItemsData = {
+    columns?: Array<('part_no' | 'name' | 'specification' | 'group_code' | 'source' | 'sales_characteristic' | 'material_category' | 'stock_unit' | 'replenishment_strategy' | 'status' | 'active_code' | 'origin')>;
+    groupCode?: Array<(string)>;
+    origin?: Array<(string)>;
+    page?: number;
+    pageSize?: number;
+    preview?: boolean;
+    search?: string;
+    sortBy?: 'part_no' | 'name' | 'specification' | 'group_code' | 'source' | 'sales_characteristic' | 'material_category' | 'stock_unit' | 'replenishment_strategy' | 'status' | 'active_code' | 'origin';
+    sortDirection?: 'asc' | 'desc';
+    source?: Array<(string)>;
+    status?: Array<(string)>;
+};
+
+export type PageErpItemReadonlyReadItemsResponse = (ItemReport);
+
+export type PageErpItemReadonlyReadItemDetailData = {
+    partNo: string;
+};
+
+export type PageErpItemReadonlyReadItemDetailResponse = (ItemDetail);
+
+export type PageErpItemReadonlyItemOptionsResponse = (ItemOptions);
+
+export type PageErpItemReadonlyExportItemsData = {
+    columns?: Array<('part_no' | 'name' | 'specification' | 'group_code' | 'source' | 'sales_characteristic' | 'material_category' | 'stock_unit' | 'replenishment_strategy' | 'status' | 'active_code' | 'origin')>;
+    groupCode?: Array<(string)>;
+    origin?: Array<(string)>;
+    page?: number;
+    pageSize?: number;
+    preview?: boolean;
+    search?: string;
+    sortBy?: 'part_no' | 'name' | 'specification' | 'group_code' | 'source' | 'sales_characteristic' | 'material_category' | 'stock_unit' | 'replenishment_strategy' | 'status' | 'active_code' | 'origin';
+    sortDirection?: 'asc' | 'desc';
+    source?: Array<(string)>;
+    status?: Array<(string)>;
+};
+
+export type PageErpItemReadonlyExportItemsResponse = (unknown);
 
 export type PageErpMenuReadonlyReadErpMenuData = {
     page?: number;

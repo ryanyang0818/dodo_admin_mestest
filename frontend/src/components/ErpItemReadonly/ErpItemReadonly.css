@@ -1,0 +1,16 @@
+.erp-item-row:nth-child(odd) {
+  background-color: white;
+}
+
+.erp-item-row:nth-child(even) {
+  background-color: #eeedc8;
+}
+
+.erp-item-row:hover {
+  background-color: #d9eaff;
+}
+
+.erp-item-row.is-selected {
+  background-color: #0078d7;
+  color: white;
+}

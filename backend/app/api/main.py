@@ -1,6 +1,7 @@
 from fastapi import APIRouter
 
 from app.api.routes import (
+    erp_item_readonly,
     bulletins,
     database_mes_dictionary,
     database_tt_dictionary,
@@ -28,6 +29,7 @@ from app.api.routes import (
 from app.core.config import settings
 
 api_router = APIRouter()
+api_router.include_router(erp_item_readonly.router)
 api_router.include_router(login.router)
 api_router.include_router(bulletins.public_router)
 api_router.include_router(users.router)
