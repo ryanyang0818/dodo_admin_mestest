@@ -4,12 +4,13 @@ import {
   Link as RouterLink,
   redirect,
 } from "@tanstack/react-router"
+import { useEffect, useRef, useState } from "react"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
 
 import type { Body_login_login_access_token as AccessToken } from "@/client"
-import { PublicBulletinBoard } from "@/components/Bulletins/PublicBulletinBoard"
 import { AuthLayout } from "@/components/Common/AuthLayout"
+import { LoginAside } from "@/components/Common/LoginAside"
 import {
   Form,
   FormControl,
@@ -33,6 +34,12 @@ const formSchema = z.object({
 
 type FormData = z.infer<typeof formSchema>
 
+const GUEST_ACCOUNT: FormData = {
+  username: "viewer@example.com",
+  password: "changethis",
+}
+const GUEST_LOGIN_DELAY_MS = 2000
+
 export const Route = createFileRoute("/login")({
   component: Login,
   beforeLoad: async () => {
@@ -53,6 +60,8 @@ export const Route = createFileRoute("/login")({
 
 function Login() {
   const { loginMutation } = useAuth()
+  const [guestLoading, setGuestLoading] = useState(false)
+  const guestTimer = useRef<ReturnType<typeof setTimeout>>(undefined)
   const form = useForm<FormData>({
     resolver: zodResolver(formSchema),
     mode: "onBlur",
@@ -68,8 +77,23 @@ function Login() {
     loginMutation.mutate(data)
   }
 
+  // 訪客登入：先填入帳密，顯示登入中 2 秒後才送出。
+  const guestLogin = () => {
+    if (guestLoading || loginMutation.isPending) return
+    form.setValue("username", GUEST_ACCOUNT.username)
+    form.setValue("password", GUEST_ACCOUNT.password)
+    setGuestLoading(true)
+    guestTimer.current = setTimeout(() => {
+      loginMutation.mutate(GUEST_ACCOUNT, {
+        onSettled: () => setGuestLoading(false),
+      })
+    }, GUEST_LOGIN_DELAY_MS)
+  }
+
+  useEffect(() => () => clearTimeout(guestTimer.current), [])
+
   return (
-    <AuthLayout aside={<PublicBulletinBoard />}>
+    <AuthLayout aside={<LoginAside />}>
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
@@ -125,16 +149,22 @@ function Login() {
               )}
             />
 
-            <LoadingButton type="submit" loading={loginMutation.isPending}>
+            <LoadingButton
+              type="submit"
+              loading={loginMutation.isPending && !guestLoading}
+              disabled={guestLoading}
+            >
               Log In
             </LoadingButton>
-          </div>
-
-          <div className="text-center text-sm">
-            Don't have an account yet?{" "}
-            <RouterLink to="/signup" className="underline underline-offset-4">
-              Sign up
-            </RouterLink>
+            <LoadingButton
+              type="button"
+              variant="outline"
+              loading={guestLoading}
+              disabled={loginMutation.isPending}
+              onClick={guestLogin}
+            >
+              {guestLoading ? "請稍等，登入中…" : "訪客登入"}
+            </LoadingButton>
           </div>
         </form>
       </Form>
