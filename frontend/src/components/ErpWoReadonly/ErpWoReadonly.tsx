@@ -1,34 +1,47 @@
-import { keepPreviousData, useQuery } from '@tanstack/react-query'
+import { keepPreviousData, useQuery } from "@tanstack/react-query"
 import {
   type ColumnDef,
   type ColumnOrderState,
+  type ColumnSizingState,
   flexRender,
   getCoreRowModel,
-  type PaginationState,
   type SortingState,
   useReactTable,
   type VisibilityState,
-} from '@tanstack/react-table'
+} from "@tanstack/react-table"
 import {
   ArrowDown,
   ArrowUp,
-  ArrowUpDown,
+  ChevronLeft,
+  ChevronRight,
+  ChevronsLeft,
+  ChevronsRight,
   Copy,
-  Download,
   RefreshCw,
   Settings2,
-  X,
-} from 'lucide-react'
-import { type FormEvent, useEffect, useMemo, useState } from 'react'
-
+} from "lucide-react"
 import {
+  type FormEvent,
+  useEffect,
+  useId,
+  useMemo,
+  useRef,
+  useState,
+} from "react"
+import {
+  PageErpWoReadonlyService as Api,
   type ErpWoRow,
-  PageErpWoReadonlyService,
   type PageErpWoReadonlyReadErpWoData,
-} from '@/client'
-import { PageHeader } from '@/components/Common/PageHeader'
-import { Badge } from '@/components/ui/badge'
-import { Button } from '@/components/ui/button'
+} from "@/client"
+import { PageHeader } from "@/components/Common/PageHeader"
+import { Button } from "@/components/ui/button"
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog"
 import {
   DropdownMenu,
   DropdownMenuCheckboxItem,
@@ -36,20 +49,25 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu'
-import { Input } from '@/components/ui/input'
+} from "@/components/ui/dropdown-menu"
+import { Input } from "@/components/ui/input"
 import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from '@/components/ui/table'
-import useCustomToast from '@/hooks/useCustomToast'
-import { cn } from '@/lib/utils'
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
+import useCustomToast from "@/hooks/useCustomToast"
+import {
+  dodoReportConfig as config,
+  type ErpWoFieldKey,
+} from "./dodo-report.config"
+import { ErpWoDetailDialog } from "./ErpWoDetailDialog"
+import { woError, woText } from "./format"
+import "@/components/ErpItemReadonly/ErpItemReadonly.css"
 
-import { dodoReportConfig, type ErpWoFieldKey } from './dodo-report.config'
+type PageSize = 0 | 25 | 50 | 100
 
 type Filters = {
   inputDateFrom: string
@@ -59,452 +77,777 @@ type Filters = {
   status: string
   woType: string
   mesFlowType: string
-  lineNo: string
-  includeInactive: boolean
 }
-type SavedReportState = {
-  columnOrder?: ColumnOrderState
-  columnVisibility?: VisibilityState
-  pageSize?: number
+type Preferences = {
+  order?: ColumnOrderState
+  visibility?: VisibilityState
+  sizing?: ColumnSizingState
 }
-
-const SAFE_TEXT = /^[A-Za-z0-9._-]*$/
-const STORAGE_KEY = 'dodo-report:' + dodoReportConfig.reportKey + ':v1'
-const PAGE_SIZE_OPTIONS = [10, 25, 50, 100]
-const todayValue = new Date().toLocaleDateString('sv-SE', { timeZone: 'Asia/Taipei' })
-const DEFAULT_FILTERS: Filters = {
-  inputDateFrom: todayValue.slice(0, 8) + '01',
-  inputDateTo: todayValue,
-  wo: '',
-  partNo: '',
-  status: '',
-  woType: '',
-  mesFlowType: '',
-  lineNo: '',
-  includeInactive: false,
-}
-const fieldEntries = Object.entries(dodoReportConfig.fields) as Array<
-  [ErpWoFieldKey, (typeof dodoReportConfig.fields)[ErpWoFieldKey]]
->
-const defaultColumnOrder = fieldEntries.map(([key]) => key)
-const defaultVisibility = Object.fromEntries(
-  fieldEntries.map(([key, field]) => [key, field.visible]),
-)
-const EMPTY_ROWS: ErpWoRow[] = []
-
-const woStatusLabels: Record<string, string> = {
-  '1': '確認生產工單',
-  '2': '已發放，料表未列印',
-  '3': '已發放，料表已列印',
-  '4': '已發料',
-  '5': '在製過程中',
-  '6': '已完工，進入 FQC',
-  '7': '完工入庫',
-  '8': '結案',
-}
-const confirmedLabels: Record<string, string> = {
-  Y: 'Y:確認',
-  N: 'N:未確認',
-  X: 'X:作廢',
-}
-const MES_FLOW_TYPE_CHIPS = [
-  { value: '', label: '全部' },
-  { value: '1', label: '1' },
-  { value: '2', label: '2' },
-  { value: '3', label: '3' },
-  { value: '4', label: '4' },
-  { value: 'none', label: '未設定' },
+const STORAGE_KEY = "dodo-report:erp.wo-readonly:v2"
+const keys = Object.keys(config.fields) as ErpWoFieldKey[]
+const emptyRows: ErpWoRow[] = []
+const flowTypes = [
+  { value: "", label: "全部" },
+  ...["1", "2", "3", "4"].map((value) => ({ value, label: value })),
+  { value: "none", label: "未設定" },
 ]
-const woTypeLabels: Record<string, string> = {
-  '1': '一般工單',
-  '5': '再加工工單',
-  '7': '委外工單',
-  '8': '重工委外工單',
-  '11': '拆件式工單',
-  '13': '預測工單',
-  '15': '試產工單',
+
+// 每次進入與清除時重新計算台灣當月，避免跨月仍沿用舊日期。
+function defaultFilters(): Filters {
+  const today = new Date().toLocaleDateString("sv-SE", {
+    timeZone: "Asia/Taipei",
+  })
+  const [year, month] = today.split("-").map(Number)
+  const lastDay = new Date(Date.UTC(year, month, 0)).getUTCDate()
+  return {
+    inputDateFrom: `${today.slice(0, 7)}-01`,
+    inputDateTo: `${today.slice(0, 7)}-${lastDay}`,
+    wo: "",
+    partNo: "",
+    status: "",
+    woType: "",
+    mesFlowType: "",
+  }
 }
 
-// 讀取已保存的報表操作狀態
-function readSavedState(): SavedReportState {
+// 僅還原已知欄位的顯示偏好，不保存查詢日期或每頁筆數。
+function readPreferences(): Preferences {
   try {
-    return JSON.parse(localStorage.getItem(STORAGE_KEY) ?? '{}')
+    const value = JSON.parse(localStorage.getItem(STORAGE_KEY) ?? "{}")
+    if (!value || typeof value !== "object" || Array.isArray(value)) return {}
+    const order = Array.isArray(value.order)
+      ? value.order.filter((key: unknown) =>
+          keys.includes(key as ErpWoFieldKey),
+        )
+      : []
+    const visibility = Object.fromEntries(
+      keys.map((key) => [
+        key,
+        typeof value.visibility?.[key] === "boolean"
+          ? value.visibility[key]
+          : config.fields[key].visible,
+      ]),
+    )
+    const sizing = Object.fromEntries(
+      keys
+        .filter((key) => Number.isFinite(value.sizing?.[key]))
+        .map((key) => [key, Math.max(60, Math.min(700, value.sizing[key]))]),
+    )
+    return { order: [...new Set([...order, ...keys])], visibility, sizing }
   } catch {
     return {}
   }
 }
 
-// 計算日期區間天數，用於前端預先擋掉超過上限的查詢
-function daysBetween(from: string, to: string): number {
-  return (Date.parse(to) - Date.parse(from)) / 86_400_000
-}
-
-// 檢查查詢條件；回傳錯誤訊息，沒問題回傳 null
-function validateFilters(filters: Filters): string | null {
-  if (!filters.inputDateFrom || !filters.inputDateTo) return '請輸入日期區間'
-  const days = daysBetween(filters.inputDateFrom, filters.inputDateTo)
-  if (days < 0) return '日期迄不可早於日期起'
-  if (days > 366) return '日期區間不可超過 366 天'
-  for (const value of [filters.wo, filters.partNo, filters.lineNo]) {
-    if (!SAFE_TEXT.test(value.trim())) return '文字條件只允許英數字、「.」「_」「-」'
-  }
+// 查詢前先驗證日期跨度與前綴條件，後端仍獨立驗證。
+function validate(filters: Filters): string | null {
+  const days =
+    (Date.parse(filters.inputDateTo) - Date.parse(filters.inputDateFrom)) /
+    86400000
+  if (!Number.isFinite(days)) return "請輸入有效的開單日期區間。"
+  if (days < 0) return "日期迄不可早於日期起。"
+  if (days > 366) return "日期區間不可超過 366 天。"
+  if (
+    [filters.wo, filters.partNo].some(
+      (value) => !/^[A-Za-z0-9._-]*$/.test(value.trim()),
+    )
+  )
+    return "文字條件只允許英數字、「.」「_」「-」。"
   return null
 }
 
-// 將搜尋與分頁狀態轉成 API 參數
-function toApiParams(
+// 將已送出的條件與排序轉換成後端查詢參數。
+function params(
   filters: Filters,
   sorting: SortingState,
-  pagination: PaginationState,
+  page: number,
+  pageSize: PageSize,
 ): PageErpWoReadonlyReadErpWoData {
-  const currentSort = sorting[0]
   return {
     inputDateFrom: filters.inputDateFrom,
     inputDateTo: filters.inputDateTo,
     wo: filters.wo.trim() || undefined,
     partNo: filters.partNo.trim() || undefined,
-    status: (filters.status || undefined) as PageErpWoReadonlyReadErpWoData['status'],
-    woType: (filters.woType ? Number(filters.woType) : undefined) as PageErpWoReadonlyReadErpWoData['woType'],
-    mesFlowType: (filters.mesFlowType || undefined) as PageErpWoReadonlyReadErpWoData['mesFlowType'],
-    lineNo: filters.lineNo.trim() || undefined,
-    includeInactive: filters.includeInactive || undefined,
-    sortBy: (currentSort?.id ?? 'input_date') as PageErpWoReadonlyReadErpWoData['sortBy'],
-    sortDirection: currentSort?.desc === false ? 'asc' : 'desc',
-    page: pagination.pageIndex + 1,
-    pageSize: pagination.pageSize,
+    status: (filters.status ||
+      undefined) as PageErpWoReadonlyReadErpWoData["status"],
+    woType: (filters.woType
+      ? Number(filters.woType)
+      : undefined) as PageErpWoReadonlyReadErpWoData["woType"],
+    mesFlowType: (filters.mesFlowType ||
+      undefined) as PageErpWoReadonlyReadErpWoData["mesFlowType"],
+    sortBy: (sorting[0]?.id ??
+      "wo") as PageErpWoReadonlyReadErpWoData["sortBy"],
+    sortDirection: sorting[0]?.desc ? "desc" : "asc",
+    page,
+    pageSize,
   }
 }
 
-// 依欄位設定格式化內容
-function formatFieldValue(key: ErpWoFieldKey, value: unknown): string {
-  const field = dodoReportConfig.fields[key]
-  if (value === null || value === undefined || value === '') return field.emptyText
-  if (field.format === 'number') return Number(value).toLocaleString('zh-TW')
-  if (field.format === 'wo-status') return woStatusLabels[String(value)] ?? String(value)
-  if (field.format === 'confirmed') return confirmedLabels[String(value)] ?? String(value)
-  if (field.format === 'wo-type') return woTypeLabels[String(value)] ?? String(value)
-  return String(value)
-}
-
-// 依狀態欄位呈現識別標籤
-function renderCell(key: ErpWoFieldKey, value: unknown) {
-  const text = formatFieldValue(key, value)
-  if (key === 'status') {
-    return <Badge variant={value === '8' || value === '7' ? 'secondary' : 'outline'}>{text}</Badge>
-  }
-  return <span className='whitespace-normal'>{text}</span>
-}
-
-// 產生設定驅動的主表欄位
-function buildColumns(): ColumnDef<ErpWoRow>[] {
-  return fieldEntries.map(([key, field]): ColumnDef<ErpWoRow> => ({
-    id: key,
-    accessorKey: key,
-    size: field.width,
-    enableSorting: field.sortable,
-    header: ({ column }) => (
-      <Button
-        type='button'
-        variant='ghost'
-        className='-ml-3 h-8'
-        disabled={!column.getCanSort()}
-        onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
-      >
-        {field.label}
-        {column.getCanSort() && <ArrowUpDown className='ml-1 size-3.5' />}
-      </Button>
-    ),
-    cell: ({ getValue }) => renderCell(key, getValue()),
-  }))
-}
-
-// ERP 工單維護作業（唯讀）純內容元件，供 Tab 與 standalone route 共用
+// 共用公開工單報表，保留原篩選及 SQL，提供 ERP 表格與基本明細。
 export function ErpWoReadonly() {
-  const { showSuccessToast, showErrorToast } = useCustomToast()
-  const savedState = useMemo(readSavedState, [])
-  const [draft, setDraft] = useState<Filters>(DEFAULT_FILTERS)
-  const [submitted, setSubmitted] = useState<Filters>(DEFAULT_FILTERS)
-  const [sorting, setSorting] = useState<SortingState>([{ id: 'input_date', desc: true }])
-  const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({
-    ...defaultVisibility,
-    ...savedState.columnVisibility,
-  })
-  const [columnOrder, setColumnOrder] = useState<ColumnOrderState>(
-    savedState.columnOrder ?? defaultColumnOrder,
+  const toast = useCustomToast()
+  const formId = useId()
+  const [draft, setDraft] = useState(defaultFilters)
+  const [submitted, setSubmitted] = useState(defaultFilters)
+  const [sorting, setSorting] = useState<SortingState>([
+    { id: "wo", desc: false },
+  ])
+  const [page, setPage] = useState(1)
+  const [pageSize, setPageSize] = useState<PageSize>(50)
+  const [preferences] = useState(readPreferences)
+  const [visibility, setVisibility] = useState<VisibilityState>(
+    preferences.visibility ??
+      Object.fromEntries(keys.map((key) => [key, config.fields[key].visible])),
   )
-  const [pagination, setPagination] = useState<PaginationState>({
-    pageIndex: 0,
-    pageSize: savedState.pageSize ?? 50,
-  })
-  const [isExporting, setIsExporting] = useState(false)
-  const draftError = validateFilters(draft)
-  const apiParams = toApiParams(submitted, sorting, pagination)
-  const draftParams = toApiParams(draft, sorting, pagination)
-
-  const optionsQuery = useQuery({
-    queryKey: [dodoReportConfig.reportKey, 'options'],
-    queryFn: () => PageErpWoReadonlyService.readErpWoOptions(),
-    staleTime: 10 * 60 * 1000,
-  })
-  const sqlQuery = useQuery({
-    queryKey: [dodoReportConfig.reportKey, 'sql', draftParams],
-    queryFn: () => PageErpWoReadonlyService.readErpWoSql(draftParams),
-    enabled: !draftError,
+  const [order, setOrder] = useState<ColumnOrderState>(
+    preferences.order ?? keys,
+  )
+  const [sizing, setSizing] = useState<ColumnSizingState>(
+    preferences.sizing ?? {},
+  )
+  const selectedRow = useRef<HTMLTableRowElement | null>(null)
+  const [detailWo, setDetailWo] = useState<string | null>(null)
+  const tableWrap = useRef<HTMLDivElement | null>(null)
+  const [sqlOpen, setSqlOpen] = useState(false)
+  const error = validate(draft)
+  const queryParams = params(submitted, sorting, page, pageSize)
+  const sqlParams = params(draft, sorting, page, pageSize)
+  const query = useQuery({
+    queryKey: [config.reportKey, "report", queryParams],
+    queryFn: () => Api.readErpWo(queryParams),
     placeholderData: keepPreviousData,
+    retry: false,
+    refetchOnWindowFocus: false,
+    refetchOnReconnect: false,
   })
-  const reportQuery = useQuery({
-    queryKey: [dodoReportConfig.reportKey, 'report', apiParams],
-    queryFn: () => PageErpWoReadonlyService.readErpWo(apiParams),
-    placeholderData: keepPreviousData,
+  const options = useQuery({
+    queryKey: [config.reportKey, "options"],
+    queryFn: () => Api.readErpWoOptions(),
+    staleTime: 600000,
+    retry: false,
   })
-
-  const data = reportQuery.data?.data ?? EMPTY_ROWS
-  const columns = useMemo<ColumnDef<ErpWoRow>[]>(() => buildColumns(), [])
+  const sql = useQuery({
+    queryKey: [config.reportKey, "sql", sqlParams],
+    queryFn: () => Api.readErpWoSql(sqlParams),
+    enabled: sqlOpen && !error,
+    retry: false,
+  })
+  const total = query.data?.total ?? 0
+  const pages = pageSize === 0 ? 1 : Math.max(1, Math.ceil(total / pageSize))
+  const columns = useMemo<ColumnDef<ErpWoRow>[]>(
+    () =>
+      keys.map((key) => ({
+        id: key,
+        accessorKey: key,
+        header: config.fields[key].label,
+        size: config.fields[key].width,
+        minSize: 60,
+        maxSize: 700,
+        cell: ({ getValue, row }) => {
+          const text = woText(key, getValue())
+          if (key !== "wo") return text
+          return (
+            <button
+              type="button"
+              className="max-w-full cursor-pointer overflow-hidden text-left text-ellipsis whitespace-nowrap underline decoration-dotted underline-offset-2"
+              title={`${text}（雙擊查看明細）`}
+              disabled={query.isPlaceholderData}
+              onDoubleClick={() => setDetailWo(row.original.wo)}
+              onKeyDown={(event) => {
+                if (event.key === "Enter") {
+                  event.preventDefault()
+                  setDetailWo(row.original.wo)
+                }
+              }}
+            >
+              {text}
+            </button>
+          )
+        },
+      })),
+    [query.isPlaceholderData],
+  )
   const table = useReactTable({
-    data,
+    data: query.data?.data ?? emptyRows,
     columns,
-    state: { sorting, columnVisibility, columnOrder, pagination },
-    pageCount: Math.max(1, Math.ceil((reportQuery.data?.total ?? 0) / pagination.pageSize)),
-    manualPagination: true,
-    manualSorting: true,
-    onSortingChange: (updater) => {
-      setSorting((current) => typeof updater === 'function' ? updater(current) : updater)
-      setPagination((current) => ({ ...current, pageIndex: 0 }))
-    },
-    onColumnVisibilityChange: setColumnVisibility,
-    onPaginationChange: (updater) => {
-      setPagination((current) => typeof updater === 'function' ? updater(current) : updater)
+    getRowId: (row) => row.wo,
+    state: {
+      sorting,
+      columnVisibility: visibility,
+      columnOrder: order,
+      columnSizing: sizing,
     },
     getCoreRowModel: getCoreRowModel(),
+    manualSorting: true,
+    enableSortingRemoval: false,
+    onSortingChange: (update) => {
+      setSorting((current) =>
+        typeof update === "function" ? update(current) : update,
+      )
+      setPage(1)
+    },
+    onColumnVisibilityChange: setVisibility,
+    onColumnOrderChange: setOrder,
+    onColumnSizingChange: setSizing,
+    columnResizeMode: "onChange",
   })
 
   useEffect(() => {
     try {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify({
-        columnOrder,
-        columnVisibility,
-        pageSize: pagination.pageSize,
-      }))
+      localStorage.setItem(
+        STORAGE_KEY,
+        JSON.stringify({ order, visibility, sizing }),
+      )
     } catch {
-      // 無法保存操作狀態時不影響查詢
+      /* 儲存失敗不影響查詢。 */
     }
-  }, [columnOrder, columnVisibility, pagination.pageSize])
+  }, [order, visibility, sizing])
 
-  const isDirty = JSON.stringify(draft) !== JSON.stringify(submitted)
-  const hasConditions = JSON.stringify(draft) !== JSON.stringify(DEFAULT_FILTERS)
-    || sorting[0]?.id !== 'input_date'
-    || sorting[0]?.desc !== true
+  useEffect(() => {
+    if (query.isSuccess && !query.isPlaceholderData && page > pages)
+      setPage(pages)
+  }, [query.isSuccess, query.isPlaceholderData, page, pages])
 
-  // 更新單一後端搜尋條件
-  function updateDraft<K extends keyof Filters>(key: K, value: Filters[K]) {
+  // 詳細視窗的上一張／下一張順序＝列表目前顯示順序。
+  const rowWos = useMemo(
+    () => (query.data?.data ?? emptyRows).map((row) => row.wo),
+    [query.data],
+  )
+
+  // 切換明細時，列表選取列同步移動並捲到可見位置。
+  function navigateDetail(wo: string) {
+    setDetailWo(wo)
+    const row = [
+      ...(tableWrap.current?.querySelectorAll("tr[data-wo]") ?? []),
+    ].find((el) => el.getAttribute("data-wo") === wo) as
+      | HTMLTableRowElement
+      | undefined
+    if (row) {
+      selectRow(row)
+      row.scrollIntoView({ block: "nearest" })
+    }
+  }
+
+  // 更新表單草稿，按查詢才送出條件。
+  function update<K extends keyof Filters>(key: K, value: Filters[K]) {
     setDraft((current) => ({ ...current, [key]: value }))
   }
 
-  // 送出後端搜尋條件並回到第一頁
-  function handleSubmit(event: FormEvent) {
+  // 直接切換列樣式，避免選取時重繪整張表格。
+  function selectRow(row: HTMLTableRowElement) {
+    selectedRow.current?.classList.remove("is-selected")
+    selectedRow.current?.setAttribute("aria-selected", "false")
+    row.classList.add("is-selected")
+    row.setAttribute("aria-selected", "true")
+    selectedRow.current = row
+  }
+
+  // 查詢或重新整理已輸入的條件。
+  function submit(event: FormEvent) {
     event.preventDefault()
-    if (draftError) {
-      showErrorToast(draftError)
-      return
-    }
-    setPagination((current) => ({ ...current, pageIndex: 0 }))
-    if (isDirty) setSubmitted(draft)
-    else reportQuery.refetch()
+    if (error) return
+    setPage(1)
+    if (page === 1 && JSON.stringify(draft) === JSON.stringify(submitted))
+      void query.refetch()
+    else setSubmitted({ ...draft })
   }
 
-  // 清除查詢與排序條件
-  function clearConditions() {
-    setDraft(DEFAULT_FILTERS)
-    setSubmitted(DEFAULT_FILTERS)
-    setSorting([{ id: 'input_date', desc: true }])
-    setPagination((current) => ({ ...current, pageIndex: 0 }))
+  // 清除後恢復當月、工單升序與第一頁。
+  function clear() {
+    const defaults = defaultFilters()
+    setPageSize(50)
+    setDraft(defaults)
+    setSubmitted(defaults)
+    setSorting([{ id: "wo", desc: false }])
+    setPage(1)
   }
 
-  // 快速過濾 MES 工單流程類型：點選後立即套用，其他條件維持已送出的內容
-  function applyFlowTypeChip(value: string) {
-    setDraft((current) => ({ ...current, mesFlowType: value }))
-    setSubmitted((current) => ({ ...current, mesFlowType: value }))
-    setPagination((current) => ({ ...current, pageIndex: 0 }))
+  // 將指定欄位往左或往右移動一格。
+  function moveColumn(index: number, offset: number) {
+    setOrder((current) => {
+      const next = [...current]
+      const target = index + offset
+      if (target < 0 || target >= next.length) return current
+      ;[next[index], next[target]] = [next[target], next[index]]
+      return next
+    })
   }
 
-  // 複製預計執行的 SQL
+  // 複製目前草稿所產生的 SQL，剪貼簿失敗時保留可手動選取內容。
   async function copySql() {
-    if (!sqlQuery.data) return
-    await navigator.clipboard.writeText(sqlQuery.data.sql)
-    showSuccessToast('已複製 SQL')
-  }
-
-  // 匯出完整篩選結果，不受目前分頁限制
-  async function exportCsv() {
-    setIsExporting(true)
+    if (!sql.data) return
     try {
-      const result = await PageErpWoReadonlyService.exportErpWo(apiParams)
-      const blob = new Blob([String(result ?? '')], { type: 'text/csv;charset=utf-8' })
-      const url = URL.createObjectURL(blob)
-      const anchor = document.createElement('a')
-      anchor.href = url
-      anchor.download = `erp-wo-readonly-${todayValue}.csv`
-      anchor.click()
-      URL.revokeObjectURL(url)
-      showSuccessToast('已匯出完整篩選結果')
+      await navigator.clipboard.writeText(sql.data.sql)
+      toast.showSuccessToast("已複製 SQL")
     } catch {
-      showErrorToast('匯出失敗；若超過 20,000 筆，請縮小日期或條件。')
-    } finally {
-      setIsExporting(false)
+      toast.showErrorToast("無法存取剪貼簿，請在下方選取 SQL 手動複製。")
     }
-  }
-
-  // 調整欄位顯示順序
-  function moveColumn(columnId: string, offset: -1 | 1) {
-    const index = columnOrder.indexOf(columnId)
-    const nextIndex = index + offset
-    if (index < 0 || nextIndex < 0 || nextIndex >= columnOrder.length) return
-    const next = [...columnOrder]
-    ;[next[index], next[nextIndex]] = [next[nextIndex], next[index]]
-    setColumnOrder(next)
   }
 
   return (
-    <section className='flex min-h-0 flex-1 flex-col gap-4'>
+    <section className="flex min-w-0 flex-col gap-4">
       <PageHeader
-        tabKey={dodoReportConfig.reportKey}
-        title={dodoReportConfig.reportTitle}
-        description={dodoReportConfig.reportDescription}
+        tabKey={config.reportKey}
+        title={config.reportTitle}
+        description={config.reportDescription}
       />
-      <form className='flex flex-wrap items-end gap-2' onSubmit={handleSubmit}>
-        <label className='space-y-1 text-xs text-muted-foreground'>
-          <span className='block'>輸入日期起</span>
-          <Input type='date' required className='h-9 w-40' value={draft.inputDateFrom} onChange={(event) => updateDraft('inputDateFrom', event.target.value)} />
+      <form
+        onSubmit={submit}
+        className="flex flex-wrap items-end gap-3 rounded-lg border p-3 text-sm"
+      >
+        <label htmlFor={`${formId}-inputDateFrom`} className="grid gap-1">
+          開單日期起
+          <Input
+            id={`${formId}-inputDateFrom`}
+            type="date"
+            required
+            className="h-8 w-40"
+            value={draft.inputDateFrom}
+            onChange={(e) => update("inputDateFrom", e.target.value)}
+          />
         </label>
-        <label className='space-y-1 text-xs text-muted-foreground'>
-          <span className='block'>輸入日期迄</span>
-          <Input type='date' required className='h-9 w-40' value={draft.inputDateTo} onChange={(event) => updateDraft('inputDateTo', event.target.value)} />
+        <label htmlFor={`${formId}-inputDateTo`} className="grid gap-1">
+          開單日期迄
+          <Input
+            id={`${formId}-inputDateTo`}
+            type="date"
+            required
+            className="h-8 w-40"
+            value={draft.inputDateTo}
+            onChange={(e) => update("inputDateTo", e.target.value)}
+          />
         </label>
-        <Input aria-label='工單編號' className='h-9 w-48' maxLength={50} placeholder='工單編號…' value={draft.wo} onChange={(event) => updateDraft('wo', event.target.value)} />
-        <Input aria-label='料號' className='h-9 w-40' maxLength={50} placeholder='料號…' value={draft.partNo} onChange={(event) => updateDraft('partNo', event.target.value)} />
-        <Input aria-label='生產線' className='h-9 w-28' maxLength={50} placeholder='生產線…' value={draft.lineNo} onChange={(event) => updateDraft('lineNo', event.target.value)} />
-        <select aria-label='工單狀態' className='h-9 rounded-md border bg-background px-3 text-sm' value={draft.status} onChange={(event) => updateDraft('status', event.target.value)}>
-          <option value=''>全部狀態</option>
-          {optionsQuery.data?.statuses.map((option) => <option key={option.value} value={option.value}>{option.label}</option>)}
-        </select>
-        <select aria-label='工單型態' className='h-9 rounded-md border bg-background px-3 text-sm' value={draft.woType} onChange={(event) => updateDraft('woType', event.target.value)}>
-          <option value=''>全部型態</option>
-          {optionsQuery.data?.wo_types.map((option) => <option key={option.value} value={option.value}>{option.label}</option>)}
-        </select>
-        <label className='flex h-9 items-center gap-1.5 text-sm'>
-          <input type='checkbox' checked={draft.includeInactive} onChange={(event) => updateDraft('includeInactive', event.target.checked)} />
-          含無效資料
+        <label htmlFor={`${formId}-wo`} className="grid gap-1">
+          工單編號
+          <Input
+            id={`${formId}-wo`}
+            className="h-8 w-44"
+            placeholder="輸入工單前綴"
+            maxLength={50}
+            value={draft.wo}
+            onChange={(e) => update("wo", e.target.value)}
+          />
         </label>
-        <Button type='submit' size='sm' disabled={reportQuery.isFetching || Boolean(draftError)}>
-          <RefreshCw className={cn('size-4', reportQuery.isFetching && 'animate-spin')} />
-          {isDirty ? '查詢' : '重新查詢'}
-        </Button>
-        {hasConditions && <Button type='button' variant='ghost' size='sm' onClick={clearConditions}><X className='size-4' />清除條件</Button>}
-        {draftError && <span role='alert' className='text-xs text-destructive'>{draftError}</span>}
-      </form>
+        <label htmlFor={`${formId}-partNo`} className="grid gap-1">
+          料件編號
+          <Input
+            id={`${formId}-partNo`}
+            className="h-8 w-40"
+            placeholder="輸入料號前綴"
+            maxLength={50}
+            value={draft.partNo}
+            onChange={(e) => update("partNo", e.target.value)}
+          />
+        </label>
 
-      <div className='flex flex-wrap items-center gap-2' role='group' aria-label='MES工單流程類型快速過濾'>
-        <span className='text-sm text-muted-foreground'>MES工單流程類型：</span>
-        {MES_FLOW_TYPE_CHIPS.map((chip) => (
-          <Button
-            key={chip.value}
-            type='button'
-            size='sm'
-            variant={submitted.mesFlowType === chip.value ? 'default' : 'outline'}
-            aria-pressed={submitted.mesFlowType === chip.value}
-            onClick={() => applyFlowTypeChip(chip.value)}
+        <label className="grid gap-1">
+          工單狀態
+          <select
+            className="h-8 rounded-md border bg-background px-2"
+            value={draft.status}
+            onChange={(e) => update("status", e.target.value)}
           >
-            {chip.label}
+            <option value="">全部</option>
+            {options.data?.statuses.map((item) => (
+              <option key={item.value} value={item.value}>
+                {item.label}
+              </option>
+            ))}
+          </select>
+        </label>
+        <label className="grid gap-1">
+          工單型態
+          <select
+            className="h-8 rounded-md border bg-background px-2"
+            value={draft.woType}
+            onChange={(e) => update("woType", e.target.value)}
+          >
+            <option value="">全部</option>
+            {options.data?.wo_types.map((item) => (
+              <option key={item.value} value={item.value}>
+                {item.label}
+              </option>
+            ))}
+          </select>
+        </label>
+
+        <label className="grid gap-1">
+          MES工單流程類型
+          <select
+            aria-label="MES工單流程類型"
+            className="h-8 rounded-md border bg-background px-2"
+            value={draft.mesFlowType}
+            onChange={(e) => update("mesFlowType", e.target.value)}
+          >
+            {flowTypes.map((item) => (
+              <option key={item.value} value={item.value}>
+                {item.label}
+              </option>
+            ))}
+          </select>
+        </label>
+
+        <div className="flex w-full flex-wrap gap-2">
+          <Button
+            type="submit"
+            size="sm"
+            disabled={Boolean(error) || query.isFetching}
+          >
+            查詢
           </Button>
-        ))}
-      </div>
-
-      <details className='rounded-md border bg-muted/20'>
-        <summary className='cursor-pointer select-none px-3 py-2 text-sm font-medium'>
-          預計執行的 SQL{isDirty && <span className='ml-2 text-xs font-normal text-amber-600'>（條件已變更）</span>}
-        </summary>
-        <div className='border-t p-3'>
-          <div className='mb-2 flex flex-wrap items-center gap-2'>
-            <span className='text-xs text-muted-foreground'>參數：</span>
-            {sqlQuery.data && Object.entries(sqlQuery.data.params).map(([key, value]) => <Badge key={key} variant='outline'>{key}={String(value)}</Badge>)}
-            <Button type='button' variant='outline' size='sm' className='ml-auto' disabled={!sqlQuery.data} onClick={copySql}><Copy className='size-4' />複製 SQL</Button>
-          </div>
-          <pre className='max-h-72 overflow-auto whitespace-pre-wrap rounded bg-background p-3 text-xs'>{sqlQuery.data?.sql ?? '載入 SQL 中…'}</pre>
+          <Button type="button" size="sm" variant="outline" onClick={clear}>
+            清除條件
+          </Button>
+          <Button
+            type="button"
+            size="sm"
+            variant="outline"
+            disabled={query.isFetching}
+            onClick={() => void query.refetch()}
+          >
+            <RefreshCw className="size-3.5" />
+            刷新
+          </Button>
+          <Button
+            type="button"
+            size="sm"
+            variant="outline"
+            disabled={Boolean(error)}
+            onClick={() => setSqlOpen(true)}
+          >
+            SQL
+          </Button>
         </div>
-      </details>
-
-      <div className='flex flex-wrap items-center justify-between gap-2'>
-        <span className='text-sm text-muted-foreground'>共 {reportQuery.data?.total.toLocaleString('zh-TW') ?? 0} 筆（唯讀）</span>
-        <div className='flex items-center gap-2'>
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild><Button type='button' variant='outline' size='sm'><Settings2 className='size-4' />欄位</Button></DropdownMenuTrigger>
-            <DropdownMenuContent align='end' className='w-72'>
-              <DropdownMenuLabel>顯示與順序</DropdownMenuLabel>
-              <DropdownMenuSeparator />
-              {columnOrder.map((columnId, index) => {
-                const field = dodoReportConfig.fields[columnId as ErpWoFieldKey]
-                if (!field) return null
-                return (
-                  <div key={columnId} className='flex items-center gap-1 pr-1'>
-                    <DropdownMenuCheckboxItem className='flex-1' checked={table.getColumn(columnId)?.getIsVisible()} onCheckedChange={(checked) => table.getColumn(columnId)?.toggleVisibility(Boolean(checked))} onSelect={(event) => event.preventDefault()}>
-                      {field.label}
-                    </DropdownMenuCheckboxItem>
-                    <Button type='button' variant='ghost' size='icon-sm' aria-label={'向左移動' + field.label} disabled={index === 0} onClick={() => moveColumn(columnId, -1)}><ArrowUp className='size-3.5' /></Button>
-                    <Button type='button' variant='ghost' size='icon-sm' aria-label={'向右移動' + field.label} disabled={index === columnOrder.length - 1} onClick={() => moveColumn(columnId, 1)}><ArrowDown className='size-3.5' /></Button>
-                  </div>
+        {error && (
+          <p role="alert" className="w-full text-destructive">
+            {error}
+          </p>
+        )}
+      </form>
+      <div className="flex flex-wrap items-center justify-between gap-2 text-sm">
+        <span>雙擊工單編號查看明細。</span>
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button type="button" size="sm" variant="outline">
+              <Settings2 className="size-3.5" />
+              欄位
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent
+            align="end"
+            className="max-h-[65vh] w-80 overflow-y-auto"
+          >
+            <DropdownMenuLabel>欄位顯示與順序</DropdownMenuLabel>
+            <DropdownMenuSeparator />
+            {order.map((id, index) => (
+              <div key={id} className="flex items-center gap-1 pr-1">
+                <DropdownMenuCheckboxItem
+                  className="flex-1"
+                  checked={table.getColumn(id)?.getIsVisible()}
+                  disabled={
+                    table.getColumn(id)?.getIsVisible() &&
+                    table.getVisibleLeafColumns().length === 1
+                  }
+                  onCheckedChange={(checked) =>
+                    table.getColumn(id)?.toggleVisibility(Boolean(checked))
+                  }
+                  onSelect={(event) => event.preventDefault()}
+                >
+                  {config.fields[id as ErpWoFieldKey].label}
+                </DropdownMenuCheckboxItem>
+                <Button
+                  type="button"
+                  variant="ghost"
+                  size="icon"
+                  className="size-6"
+                  aria-label={`${config.fields[id as ErpWoFieldKey].label}往前`}
+                  disabled={index === 0}
+                  onClick={() => moveColumn(index, -1)}
+                >
+                  <ArrowUp className="size-3" />
+                </Button>
+                <Button
+                  type="button"
+                  variant="ghost"
+                  size="icon"
+                  className="size-6"
+                  aria-label={`${config.fields[id as ErpWoFieldKey].label}往後`}
+                  disabled={index === order.length - 1}
+                  onClick={() => moveColumn(index, 1)}
+                >
+                  <ArrowDown className="size-3" />
+                </Button>
+              </div>
+            ))}
+            <DropdownMenuSeparator />
+            <Button
+              type="button"
+              variant="ghost"
+              className="w-full"
+              onClick={() => {
+                setOrder(keys)
+                setVisibility(
+                  Object.fromEntries(
+                    keys.map((key) => [key, config.fields[key].visible]),
+                  ),
                 )
-              })}
-            </DropdownMenuContent>
-          </DropdownMenu>
-          <Button type='button' variant='outline' size='sm' disabled={isExporting || reportQuery.isPending} onClick={exportCsv}>
-            <Download className={cn('size-4', isExporting && 'animate-pulse')} />{isExporting ? '匯出中…' : '匯出完整結果'}
-          </Button>
-        </div>
+                setSizing({})
+              }}
+            >
+              恢復預設欄位
+            </Button>
+          </DropdownMenuContent>
+        </DropdownMenu>
       </div>
-
-      {reportQuery.isPending && <div className='rounded-md border py-12 text-center text-muted-foreground'>查詢 TIPTOP 工單中…</div>}
-      {reportQuery.isError && <div role='alert' className='rounded-md border border-destructive/40 py-12 text-center text-destructive'>TIPTOP 工單查詢失敗，請確認日期條件或稍後再試。</div>}
-      {reportQuery.isSuccess && !data.length && <div className='rounded-md border py-12 text-center text-muted-foreground'>查無符合條件的工單。</div>}
-      {data.length > 0 && (
-        <div className='min-h-0 flex-1 overflow-auto rounded-md border' data-testid='erp-wo-readonly-table'>
-          <Table style={{ width: table.getTotalSize() }}>
-            <TableHeader className='sticky top-0 z-20 bg-background'>
-              {table.getHeaderGroups().map((group) => (
-                <TableRow key={group.id}>
-                  {group.headers.map((header) => <TableHead key={header.id} style={{ width: header.getSize() }}>{flexRender(header.column.columnDef.header, header.getContext())}</TableHead>)}
-                </TableRow>
-              ))}
-            </TableHeader>
-            <TableBody>
+      {query.isFetching && <p role="status">查詢中…</p>}
+      {query.isError && (
+        <p role="alert" className="text-destructive">
+          {woError(query.error)}
+        </p>
+      )}
+      {options.isError && (
+        <p role="alert" className="text-destructive">
+          篩選選項載入失敗。
+          <button
+            type="button"
+            className="underline"
+            onClick={() => void options.refetch()}
+          >
+            重新載入
+          </button>
+        </p>
+      )}
+      {query.isSuccess && !query.isFetching && query.data.data.length === 0 && (
+        <p>查無符合條件的工單。</p>
+      )}
+      {query.isSuccess && (
+        <div
+          ref={tableWrap}
+          className="max-h-[65vh] overflow-auto border border-[#8b8b8b] bg-white"
+          aria-busy={query.isFetching}
+        >
+          <table
+            aria-label="工單查詢結果"
+            className="border-collapse select-none text-[12px] leading-[16px] text-[#1f2937]"
+            style={{ width: table.getTotalSize(), tableLayout: "fixed" }}
+          >
+            <thead className="sticky top-0 z-10 bg-[#eeeeee]">
+              <tr>
+                {table.getHeaderGroups()[0].headers.map((header) => (
+                  <th
+                    key={header.id}
+                    className="relative h-[22px] overflow-hidden whitespace-nowrap border-b border-r border-[#8b8b8b] px-1 py-0.5 text-left font-normal"
+                    style={{ width: header.getSize() }}
+                    aria-sort={
+                      header.column.getIsSorted() === "asc"
+                        ? "ascending"
+                        : header.column.getIsSorted() === "desc"
+                          ? "descending"
+                          : "none"
+                    }
+                  >
+                    <button
+                      type="button"
+                      onClick={header.column.getToggleSortingHandler()}
+                    >
+                      {flexRender(
+                        header.column.columnDef.header,
+                        header.getContext(),
+                      )}
+                      {header.column.getIsSorted() === "asc"
+                        ? " ↑"
+                        : header.column.getIsSorted() === "desc"
+                          ? " ↓"
+                          : ""}
+                    </button>
+                    <hr
+                      tabIndex={0}
+                      aria-label={`調整${config.fields[header.id as ErpWoFieldKey].label}寬度`}
+                      aria-orientation="vertical"
+                      aria-valuenow={header.getSize()}
+                      className="absolute right-0 top-0 h-full w-2 cursor-col-resize touch-none"
+                      onMouseDown={header.getResizeHandler()}
+                      onTouchStart={header.getResizeHandler()}
+                      onKeyDown={(event) => {
+                        if (
+                          event.key === "ArrowLeft" ||
+                          event.key === "ArrowRight"
+                        ) {
+                          event.preventDefault()
+                          setSizing((current) => ({
+                            ...current,
+                            [header.id]: Math.max(
+                              60,
+                              Math.min(
+                                700,
+                                header.getSize() +
+                                  (event.key === "ArrowRight" ? 10 : -10),
+                              ),
+                            ),
+                          }))
+                        }
+                      }}
+                    />
+                  </th>
+                ))}
+              </tr>
+            </thead>
+            <tbody>
               {table.getRowModel().rows.map((row) => (
-                <TableRow key={row.original.wo}>
+                <tr
+                  key={row.id}
+                  data-wo={row.id}
+                  tabIndex={0}
+                  className="erp-item-row"
+                  onClick={(event) => selectRow(event.currentTarget)}
+                  onFocus={(event) => selectRow(event.currentTarget)}
+                >
                   {row.getVisibleCells().map((cell) => (
-                    <TableCell key={cell.id} className='py-1.5' style={{ width: cell.column.getSize(), maxWidth: cell.column.getSize() }}>
-                      {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                    </TableCell>
+                    <td
+                      key={cell.id}
+                      title={woText(
+                        cell.column.id as ErpWoFieldKey,
+                        cell.getValue(),
+                      )}
+                      className="h-[17px] overflow-hidden text-ellipsis whitespace-nowrap border-r border-[#b8b8b8] px-1 py-0"
+                    >
+                      {flexRender(
+                        cell.column.columnDef.cell,
+                        cell.getContext(),
+                      )}
+                    </td>
                   ))}
-                </TableRow>
+                </tr>
               ))}
-            </TableBody>
-          </Table>
+            </tbody>
+          </table>
         </div>
       )}
-
-      {data.length > 0 && (
-        <div className='flex items-center justify-between gap-3 text-sm'>
-          <span className='text-muted-foreground'>第 {pagination.pageIndex + 1} / {Math.max(table.getPageCount(), 1)} 頁</span>
-          <div className='flex items-center gap-2'>
-            <label htmlFor='erp-wo-readonly-page-size' className='text-muted-foreground'>每頁</label>
-            <select id='erp-wo-readonly-page-size' className='h-8 rounded-md border bg-background px-2' value={pagination.pageSize} onChange={(event) => table.setPageSize(Number(event.target.value))}>
-              {PAGE_SIZE_OPTIONS.map((size) => <option key={size} value={size}>{size}</option>)}
-            </select>
-            <Button type='button' variant='outline' size='sm' disabled={!table.getCanPreviousPage()} onClick={() => table.previousPage()}>上一頁</Button>
-            <Button type='button' variant='outline' size='sm' disabled={!table.getCanNextPage()} onClick={() => table.nextPage()}>下一頁</Button>
+      <div className="-mt-4 flex flex-wrap items-center justify-between gap-3 rounded-b-md border border-t-0 bg-muted/20 px-3 py-2 text-xs text-muted-foreground">
+        <div className="flex items-center gap-3">
+          <span>
+            共{" "}
+            <span className="font-medium text-foreground">
+              {total.toLocaleString("zh-TW")}
+            </span>{" "}
+            筆
+          </span>
+          <div className="flex items-center gap-1.5">
+            <span>每頁</span>
+            <Select
+              value={String(pageSize)}
+              disabled={query.isFetching}
+              onValueChange={(value) => {
+                setPageSize(Number(value) as PageSize)
+                setPage(1)
+              }}
+            >
+              <SelectTrigger
+                size="sm"
+                className="h-7 w-[76px]"
+                aria-label="每頁筆數"
+              >
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent side="top">
+                {[25, 50, 100, 0].map((value) => (
+                  <SelectItem key={value} value={String(value)}>
+                    {value === 0 ? "全部" : value}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
           </div>
         </div>
+        <div className="flex items-center gap-3">
+          <span>
+            第 <span className="font-medium text-foreground">{page}</span> /{" "}
+            {pages} 頁
+          </span>
+          <div className="flex items-center gap-1">
+            <Button
+              type="button"
+              variant="outline"
+              size="icon"
+              className="size-7"
+              aria-label="第一頁"
+              disabled={page <= 1 || query.isFetching}
+              onClick={() => setPage(1)}
+            >
+              <ChevronsLeft className="size-4" />
+            </Button>
+            <Button
+              type="button"
+              variant="outline"
+              size="icon"
+              className="size-7"
+              aria-label="上一頁"
+              disabled={page <= 1 || query.isFetching}
+              onClick={() => setPage((value) => value - 1)}
+            >
+              <ChevronLeft className="size-4" />
+            </Button>
+            <Button
+              type="button"
+              variant="outline"
+              size="icon"
+              className="size-7"
+              aria-label="下一頁"
+              disabled={page >= pages || query.isFetching}
+              onClick={() => setPage((value) => value + 1)}
+            >
+              <ChevronRight className="size-4" />
+            </Button>
+            <Button
+              type="button"
+              variant="outline"
+              size="icon"
+              className="size-7"
+              aria-label="最後頁"
+              disabled={page >= pages || query.isFetching}
+              onClick={() => setPage(pages)}
+            >
+              <ChevronsRight className="size-4" />
+            </Button>
+          </div>
+        </div>
+      </div>
+      {detailWo && (
+        <ErpWoDetailDialog
+          wo={detailWo}
+          wos={rowWos}
+          onNavigate={navigateDetail}
+          onClose={() => setDetailWo(null)}
+        />
       )}
+      <Dialog open={sqlOpen} onOpenChange={setSqlOpen}>
+        <DialogContent className="max-h-[85vh] overflow-y-auto sm:max-w-4xl">
+          <DialogHeader>
+            <DialogTitle>預計執行的 SQL</DialogTitle>
+            <DialogDescription>
+              依目前輸入的查詢條件產生，僅供檢視及複製。
+            </DialogDescription>
+          </DialogHeader>
+          {sql.isPending && <p role="status">產生 SQL 中…</p>}
+          {sql.isError && <p role="alert">{woError(sql.error)}</p>}
+          {sql.data && (
+            <>
+              <Button
+                type="button"
+                variant="outline"
+                className="justify-self-start"
+                onClick={copySql}
+              >
+                <Copy className="size-4" />
+                複製 SQL
+              </Button>
+              <pre className="overflow-x-auto whitespace-pre-wrap rounded border bg-muted p-3 text-xs">
+                {sql.data.sql}
+              </pre>
+            </>
+          )}
+        </DialogContent>
+      </Dialog>
     </section>
   )
 }
-
-export default ErpWoReadonly

@@ -3,7 +3,7 @@
 import type { CancelablePromise } from './core/CancelablePromise';
 import { OpenAPI } from './core/OpenAPI';
 import { request as __request } from './core/request';
-import type { BulletinsReadBulletinsData, BulletinsReadBulletinsResponse, BulletinsCreateBulletinData, BulletinsCreateBulletinResponse, BulletinsReadBulletinData, BulletinsReadBulletinResponse, BulletinsUpdateBulletinData, BulletinsUpdateBulletinResponse, BulletinsUploadBulletinAssetData, BulletinsUploadBulletinAssetResponse, HelloHelloWorldResponse, ItemsReadItemsData, ItemsReadItemsResponse, ItemsCreateItemData, ItemsCreateItemResponse, ItemsReadItemData, ItemsReadItemResponse, ItemsUpdateItemData, ItemsUpdateItemResponse, ItemsDeleteItemData, ItemsDeleteItemResponse, LoginLoginAccessTokenData, LoginLoginAccessTokenResponse, LoginTestTokenResponse, LoginRecoverPasswordData, LoginRecoverPasswordResponse, LoginResetPasswordData, LoginResetPasswordResponse, LoginRecoverPasswordHtmlContentData, LoginRecoverPasswordHtmlContentResponse, MenusReadMyMenuTreeResponse, PageDatabaseMesDictionaryReadMesTablesData, PageDatabaseMesDictionaryReadMesTablesResponse, PageDatabaseMesDictionaryReadMesColumnsData, PageDatabaseMesDictionaryReadMesColumnsResponse, PageDatabaseTtDictionaryReadTtTablesData, PageDatabaseTtDictionaryReadTtTablesResponse, PageDatabaseTtDictionaryReadTtColumnsData, PageDatabaseTtDictionaryReadTtColumnsResponse, PageErpItemReadonlyItemSqlData, PageErpItemReadonlyItemSqlResponse, PageErpItemReadonlyReadItemsData, PageErpItemReadonlyReadItemsResponse, PageErpItemReadonlyReadItemDetailData, PageErpItemReadonlyReadItemDetailResponse, PageErpItemReadonlyItemOptionsResponse, PageErpItemReadonlyExportItemsData, PageErpItemReadonlyExportItemsResponse, PageErpMenuReadonlyReadErpMenuData, PageErpMenuReadonlyReadErpMenuResponse, PageErpSlipReadonlyReadErpSlipsResponse, PageErpWoReadonlyReadErpWoSqlData, PageErpWoReadonlyReadErpWoSqlResponse, PageErpWoReadonlyReadErpWoOptionsResponse, PageErpWoReadonlyExportErpWoData, PageErpWoReadonlyExportErpWoResponse, PageErpWoReadonlyReadErpWoData, PageErpWoReadonlyReadErpWoResponse, PageHrUserReportReadUserReportResponse, PageMesInspectionQueryReadInspectionLotData, PageMesInspectionQueryReadInspectionLotResponse, PageMesInspectionQueryReadInspectionFormsResponse, PageMesInspectionQueryReadInspectionSheetsData, PageMesInspectionQueryReadInspectionSheetsResponse, PageMesInspectionQueryReadInspectionMeasurementsData, PageMesInspectionQueryReadInspectionMeasurementsResponse, PageMesInspectionQueryReadInspectionParametersData, PageMesInspectionQueryReadInspectionParametersResponse, PageMesInspectionQueryReadInspectionSqlData, PageMesInspectionQueryReadInspectionSqlResponse, PageMesInspectionQueryExportInspectionMeasurementsData, PageMesInspectionQueryExportInspectionMeasurementsResponse, PageMesUserReportReadMesUserReportSqlData, PageMesUserReportReadMesUserReportSqlResponse, PageMesUserReportReadMesUserReportData, PageMesUserReportReadMesUserReportResponse, PageMesUserReportReadMesUserReportOptionsResponse, PageMesWoReportReadMesWoReportSqlData, PageMesWoReportReadMesWoReportSqlResponse, PageMesWoReportReadMesWoReportData, PageMesWoReportReadMesWoReportResponse, PageMesWoReportReadMesWoReportOptionsResponse, PageMesWorkReportReadMesWorkReportSqlData, PageMesWorkReportReadMesWorkReportSqlResponse, PageMesWorkReportReadMesWorkReportOptionsResponse, PageMesWorkReportExportMesWorkReportData, PageMesWorkReportExportMesWorkReportResponse, PageMesWorkReportReadMesWorkReportDetailsData, PageMesWorkReportReadMesWorkReportDetailsResponse, PageMesWorkReportReadMesWorkReportData, PageMesWorkReportReadMesWorkReportResponse, PageSystemMenusReadMenusData, PageSystemMenusReadMenusResponse, PageSystemMenusCreateMenuData, PageSystemMenusCreateMenuResponse, PageSystemMenusReadMenuData, PageSystemMenusReadMenuResponse, PageSystemMenusUpdateMenuData, PageSystemMenusUpdateMenuResponse, PageSystemMenusDeleteMenuData, PageSystemMenusDeleteMenuResponse, PageSystemRoleReportReadRoleReportResponse, PageTodoReportReadTodoReportResponse, PageTodosReadTodosData, PageTodosReadTodosResponse, PageTodosCreateTodoData, PageTodosCreateTodoResponse, PageTodosReadTodoData, PageTodosReadTodoResponse, PageTodosUpdateTodoData, PageTodosUpdateTodoResponse, PageTodosDeleteTodoData, PageTodosDeleteTodoResponse, PrivateCreateUserData, PrivateCreateUserResponse, PublicBulletinsReadPublicBulletinsData, PublicBulletinsReadPublicBulletinsResponse, PublicBulletinsReadPublicBulletinData, PublicBulletinsReadPublicBulletinResponse, PublicBulletinsReadPublicBulletinAssetData, PublicBulletinsReadPublicBulletinAssetResponse, TestReadHelloResponse, UsersReadUsersData, UsersReadUsersResponse, UsersCreateUserData, UsersCreateUserResponse, UsersReadUserMeResponse, UsersDeleteUserMeResponse, UsersUpdateUserMeData, UsersUpdateUserMeResponse, UsersUpdatePasswordMeData, UsersUpdatePasswordMeResponse, UsersRegisterUserData, UsersRegisterUserResponse, UsersReadUserByIdData, UsersReadUserByIdResponse, UsersUpdateUserData, UsersUpdateUserResponse, UsersDeleteUserData, UsersDeleteUserResponse, UtilsTestEmailData, UtilsTestEmailResponse, UtilsHealthCheckResponse } from './types.gen';
+import type { BulletinsReadBulletinsData, BulletinsReadBulletinsResponse, BulletinsCreateBulletinData, BulletinsCreateBulletinResponse, BulletinsReadBulletinData, BulletinsReadBulletinResponse, BulletinsUpdateBulletinData, BulletinsUpdateBulletinResponse, BulletinsUploadBulletinAssetData, BulletinsUploadBulletinAssetResponse, HelloHelloWorldResponse, ItemsReadItemsData, ItemsReadItemsResponse, ItemsCreateItemData, ItemsCreateItemResponse, ItemsReadItemData, ItemsReadItemResponse, ItemsUpdateItemData, ItemsUpdateItemResponse, ItemsDeleteItemData, ItemsDeleteItemResponse, LoginLoginAccessTokenData, LoginLoginAccessTokenResponse, LoginTestTokenResponse, LoginRecoverPasswordData, LoginRecoverPasswordResponse, LoginResetPasswordData, LoginResetPasswordResponse, LoginRecoverPasswordHtmlContentData, LoginRecoverPasswordHtmlContentResponse, MenusReadMyMenuTreeResponse, PageDatabaseMesDictionaryReadMesTablesData, PageDatabaseMesDictionaryReadMesTablesResponse, PageDatabaseMesDictionaryReadMesColumnsData, PageDatabaseMesDictionaryReadMesColumnsResponse, PageDatabaseTtDictionaryReadTtTablesData, PageDatabaseTtDictionaryReadTtTablesResponse, PageDatabaseTtDictionaryReadTtColumnsData, PageDatabaseTtDictionaryReadTtColumnsResponse, PageErpItemReadonlyItemSqlData, PageErpItemReadonlyItemSqlResponse, PageErpItemReadonlyReadItemsData, PageErpItemReadonlyReadItemsResponse, PageErpItemReadonlyReadItemDetailData, PageErpItemReadonlyReadItemDetailResponse, PageErpItemReadonlyItemOptionsResponse, PageErpItemReadonlyExportItemsData, PageErpItemReadonlyExportItemsResponse, PageErpMenuReadonlyReadErpMenuData, PageErpMenuReadonlyReadErpMenuResponse, PageErpSlipReadonlyReadErpSlipsResponse, PageErpWoReadonlyReadErpWoSqlData, PageErpWoReadonlyReadErpWoSqlResponse, PageErpWoReadonlyReadErpWoOptionsResponse, PageErpWoReadonlyReadErpWoDetailData, PageErpWoReadonlyReadErpWoDetailResponse, PageErpWoReadonlyReadErpWoMaterialsData, PageErpWoReadonlyReadErpWoMaterialsResponse, PageErpWoReadonlyReadErpWoData, PageErpWoReadonlyReadErpWoResponse, PageHrUserReportReadUserReportResponse, PageMesInspectionQueryReadInspectionLotData, PageMesInspectionQueryReadInspectionLotResponse, PageMesInspectionQueryReadInspectionFormsResponse, PageMesInspectionQueryReadInspectionSheetsData, PageMesInspectionQueryReadInspectionSheetsResponse, PageMesInspectionQueryReadInspectionMeasurementsData, PageMesInspectionQueryReadInspectionMeasurementsResponse, PageMesInspectionQueryReadInspectionParametersData, PageMesInspectionQueryReadInspectionParametersResponse, PageMesInspectionQueryReadInspectionSqlData, PageMesInspectionQueryReadInspectionSqlResponse, PageMesInspectionQueryExportInspectionMeasurementsData, PageMesInspectionQueryExportInspectionMeasurementsResponse, PageMesUserReportReadMesUserReportSqlData, PageMesUserReportReadMesUserReportSqlResponse, PageMesUserReportReadMesUserReportData, PageMesUserReportReadMesUserReportResponse, PageMesUserReportReadMesUserReportOptionsResponse, PageMesWoReportReadMesWoReportSqlData, PageMesWoReportReadMesWoReportSqlResponse, PageMesWoReportReadMesWoReportData, PageMesWoReportReadMesWoReportResponse, PageMesWoReportReadMesWoReportOptionsResponse, PageMesWorkReportReadMesWorkReportSqlData, PageMesWorkReportReadMesWorkReportSqlResponse, PageMesWorkReportReadMesWorkReportOptionsResponse, PageMesWorkReportExportMesWorkReportData, PageMesWorkReportExportMesWorkReportResponse, PageMesWorkReportReadMesWorkReportDetailsData, PageMesWorkReportReadMesWorkReportDetailsResponse, PageMesWorkReportReadMesWorkReportData, PageMesWorkReportReadMesWorkReportResponse, PageSystemMenusReadMenusData, PageSystemMenusReadMenusResponse, PageSystemMenusCreateMenuData, PageSystemMenusCreateMenuResponse, PageSystemMenusReadMenuData, PageSystemMenusReadMenuResponse, PageSystemMenusUpdateMenuData, PageSystemMenusUpdateMenuResponse, PageSystemMenusDeleteMenuData, PageSystemMenusDeleteMenuResponse, PageSystemRoleReportReadRoleReportResponse, PageTodoReportReadTodoReportResponse, PageTodosReadTodosData, PageTodosReadTodosResponse, PageTodosCreateTodoData, PageTodosCreateTodoResponse, PageTodosReadTodoData, PageTodosReadTodoResponse, PageTodosUpdateTodoData, PageTodosUpdateTodoResponse, PageTodosDeleteTodoData, PageTodosDeleteTodoResponse, PrivateCreateUserData, PrivateCreateUserResponse, PublicBulletinsReadPublicBulletinsData, PublicBulletinsReadPublicBulletinsResponse, PublicBulletinsReadPublicBulletinData, PublicBulletinsReadPublicBulletinResponse, PublicBulletinsReadPublicBulletinAssetData, PublicBulletinsReadPublicBulletinAssetResponse, TestReadHelloResponse, UsersReadUsersData, UsersReadUsersResponse, UsersCreateUserData, UsersCreateUserResponse, UsersReadUserMeResponse, UsersDeleteUserMeResponse, UsersUpdateUserMeData, UsersUpdateUserMeResponse, UsersUpdatePasswordMeData, UsersUpdatePasswordMeResponse, UsersRegisterUserData, UsersRegisterUserResponse, UsersReadUserByIdData, UsersReadUserByIdResponse, UsersUpdateUserData, UsersUpdateUserResponse, UsersDeleteUserData, UsersDeleteUserResponse, UtilsTestEmailData, UtilsTestEmailResponse, UtilsHealthCheckResponse } from './types.gen';
 
 export class BulletinsService {
     /**
@@ -33,7 +33,7 @@ export class BulletinsService {
             }
         });
     }
-
+    
     /**
      * Createbulletin
      * @param data The data for the request.
@@ -52,7 +52,7 @@ export class BulletinsService {
             }
         });
     }
-
+    
     /**
      * Readbulletin
      * @param data The data for the request.
@@ -72,7 +72,7 @@ export class BulletinsService {
             }
         });
     }
-
+    
     /**
      * Updatebulletin
      * @param data The data for the request.
@@ -95,7 +95,7 @@ export class BulletinsService {
             }
         });
     }
-
+    
     /**
      * Uploadbulletinasset
      * @param data The data for the request.
@@ -484,7 +484,7 @@ export class PageErpItemReadonlyService {
             }
         });
     }
-
+    
     /**
      * Read Items
      * @param data The data for the request.
@@ -524,7 +524,7 @@ export class PageErpItemReadonlyService {
             }
         });
     }
-
+    
     /**
      * Read Item Detail
      * @param data The data for the request.
@@ -544,7 +544,7 @@ export class PageErpItemReadonlyService {
             }
         });
     }
-
+    
     /**
      * Item Options
      * @returns ItemOptions Successful Response
@@ -556,7 +556,7 @@ export class PageErpItemReadonlyService {
             url: '/api/v1/page/erp/item-readonly/report/options'
         });
     }
-
+    
     /**
      * Export Items
      * @param data The data for the request.
@@ -655,8 +655,6 @@ export class PageErpWoReadonlyService {
      * @param data.status
      * @param data.woType
      * @param data.mesFlowType
-     * @param data.lineNo
-     * @param data.includeInactive
      * @param data.sortBy
      * @param data.sortDirection
      * @param data.page
@@ -676,8 +674,6 @@ export class PageErpWoReadonlyService {
                 status: data.status,
                 wo_type: data.woType,
                 mes_flow_type: data.mesFlowType,
-                line_no: data.lineNo,
-                include_inactive: data.includeInactive,
                 sort_by: data.sortBy,
                 sort_direction: data.sortDirection,
                 page: data.page,
@@ -702,42 +698,38 @@ export class PageErpWoReadonlyService {
     }
     
     /**
-     * Exporterpwo
+     * Readerpwodetail
      * @param data The data for the request.
-     * @param data.inputDateFrom
-     * @param data.inputDateTo
      * @param data.wo
-     * @param data.partNo
-     * @param data.status
-     * @param data.woType
-     * @param data.mesFlowType
-     * @param data.lineNo
-     * @param data.includeInactive
-     * @param data.sortBy
-     * @param data.sortDirection
-     * @param data.page
-     * @param data.pageSize
-     * @returns unknown Successful Response
+     * @returns ErpWoDetail Successful Response
      * @throws ApiError
      */
-    public static exportErpWo(data: PageErpWoReadonlyExportErpWoData = {}): CancelablePromise<PageErpWoReadonlyExportErpWoResponse> {
+    public static readErpWoDetail(data: PageErpWoReadonlyReadErpWoDetailData): CancelablePromise<PageErpWoReadonlyReadErpWoDetailResponse> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/api/v1/page/erp_wo-readonly/report/export',
+            url: '/api/v1/page/erp_wo-readonly/report/detail',
             query: {
-                input_date_from: data.inputDateFrom,
-                input_date_to: data.inputDateTo,
-                wo: data.wo,
-                part_no: data.partNo,
-                status: data.status,
-                wo_type: data.woType,
-                mes_flow_type: data.mesFlowType,
-                line_no: data.lineNo,
-                include_inactive: data.includeInactive,
-                sort_by: data.sortBy,
-                sort_direction: data.sortDirection,
-                page: data.page,
-                page_size: data.pageSize
+                wo: data.wo
+            },
+            errors: {
+                422: 'Validation Error'
+            }
+        });
+    }
+    
+    /**
+     * Readerpwomaterials
+     * @param data The data for the request.
+     * @param data.wo
+     * @returns ErpWoMaterial Successful Response
+     * @throws ApiError
+     */
+    public static readErpWoMaterials(data: PageErpWoReadonlyReadErpWoMaterialsData): CancelablePromise<PageErpWoReadonlyReadErpWoMaterialsResponse> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/api/v1/page/erp_wo-readonly/report/materials',
+            query: {
+                wo: data.wo
             },
             errors: {
                 422: 'Validation Error'
@@ -755,8 +747,6 @@ export class PageErpWoReadonlyService {
      * @param data.status
      * @param data.woType
      * @param data.mesFlowType
-     * @param data.lineNo
-     * @param data.includeInactive
      * @param data.sortBy
      * @param data.sortDirection
      * @param data.page
@@ -776,8 +766,6 @@ export class PageErpWoReadonlyService {
                 status: data.status,
                 wo_type: data.woType,
                 mes_flow_type: data.mesFlowType,
-                line_no: data.lineNo,
-                include_inactive: data.includeInactive,
                 sort_by: data.sortBy,
                 sort_direction: data.sortDirection,
                 page: data.page,
@@ -1573,7 +1561,7 @@ export class PublicBulletinsService {
             }
         });
     }
-
+    
     /**
      * Readpublicbulletin
      * @param data The data for the request.
@@ -1593,7 +1581,7 @@ export class PublicBulletinsService {
             }
         });
     }
-
+    
     /**
      * Readpublicbulletinasset
      * @param data The data for the request.

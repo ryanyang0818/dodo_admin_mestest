@@ -570,6 +570,932 @@ export const ErpSlipRowSchema = {
     title: 'ErpSlipRow'
 } as const;
 
+export const ErpWoDetailSchema = {
+    properties: {
+        wo: {
+            type: 'string',
+            title: 'Wo'
+        },
+        wo_name: {
+            anyOf: [
+                {
+                    type: 'string'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Wo Name'
+        },
+        wo_type: {
+            anyOf: [
+                {
+                    type: 'integer'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Wo Type'
+        },
+        status: {
+            anyOf: [
+                {
+                    type: 'string'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Status'
+        },
+        confirmed: {
+            anyOf: [
+                {
+                    type: 'string'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Confirmed'
+        },
+        part_no: {
+            anyOf: [
+                {
+                    type: 'string'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Part No'
+        },
+        name: {
+            anyOf: [
+                {
+                    type: 'string'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Name'
+        },
+        specification: {
+            anyOf: [
+                {
+                    type: 'string'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Specification'
+        },
+        issued_qty: {
+            anyOf: [
+                {
+                    type: 'number'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Issued Qty'
+        },
+        fqc: {
+            anyOf: [
+                {
+                    type: 'string'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Fqc'
+        },
+        plan_qty: {
+            anyOf: [
+                {
+                    type: 'number'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Plan Qty'
+        },
+        completed_qty: {
+            anyOf: [
+                {
+                    type: 'number'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Completed Qty'
+        },
+        scrap_qty: {
+            anyOf: [
+                {
+                    type: 'number'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Scrap Qty'
+        },
+        plan_start_date: {
+            anyOf: [
+                {
+                    type: 'string',
+                    format: 'date'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Plan Start Date'
+        },
+        plan_end_date: {
+            anyOf: [
+                {
+                    type: 'string',
+                    format: 'date'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Plan End Date'
+        },
+        line_no: {
+            anyOf: [
+                {
+                    type: 'string'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Line No'
+        },
+        mes_flow_type: {
+            anyOf: [
+                {
+                    type: 'integer'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Mes Flow Type'
+        },
+        lot_no: {
+            anyOf: [
+                {
+                    type: 'string'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Lot No'
+        },
+        input_date: {
+            anyOf: [
+                {
+                    type: 'string',
+                    format: 'date'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Input Date'
+        },
+        approval_status: {
+            anyOf: [
+                {
+                    type: 'string'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Approval Status'
+        },
+        need_sign: {
+            anyOf: [
+                {
+                    type: 'string'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Need Sign'
+        },
+        close_status: {
+            anyOf: [
+                {
+                    type: 'string'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Close Status'
+        },
+        close_date: {
+            anyOf: [
+                {
+                    type: 'string',
+                    format: 'date'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Close Date'
+        },
+        applicant: {
+            anyOf: [
+                {
+                    type: 'string'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Applicant'
+        },
+        applicant_name: {
+            anyOf: [
+                {
+                    type: 'string'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Applicant Name'
+        },
+        change_no: {
+            anyOf: [
+                {
+                    type: 'string'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Change No'
+        },
+        change_routing_no: {
+            anyOf: [
+                {
+                    type: 'string'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Change Routing No'
+        },
+        pbi_no: {
+            anyOf: [
+                {
+                    type: 'string'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Pbi No'
+        },
+        parent_wo: {
+            anyOf: [
+                {
+                    type: 'string'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Parent Wo'
+        },
+        notice_no: {
+            anyOf: [
+                {
+                    type: 'string'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Notice No'
+        },
+        issue_labor_end_date: {
+            anyOf: [
+                {
+                    type: 'string',
+                    format: 'date'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Issue Labor End Date'
+        },
+        backup_generated: {
+            anyOf: [
+                {
+                    type: 'string'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Backup Generated'
+        },
+        outsource_type: {
+            anyOf: [
+                {
+                    type: 'string'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Outsource Type'
+        },
+        custom_01: {
+            anyOf: [
+                {
+                    type: 'string'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Custom 01'
+        },
+        custom_04: {
+            anyOf: [
+                {
+                    type: 'string'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Custom 04'
+        },
+        custom_05: {
+            anyOf: [
+                {
+                    type: 'string'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Custom 05'
+        },
+        custom_06: {
+            anyOf: [
+                {
+                    type: 'string'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Custom 06'
+        },
+        custom_07: {
+            anyOf: [
+                {
+                    type: 'number'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Custom 07'
+        },
+        custom_08: {
+            anyOf: [
+                {
+                    type: 'number'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Custom 08'
+        },
+        custom_09: {
+            anyOf: [
+                {
+                    type: 'number'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Custom 09'
+        },
+        custom_11: {
+            anyOf: [
+                {
+                    type: 'integer'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Custom 11'
+        },
+        custom_12: {
+            anyOf: [
+                {
+                    type: 'integer'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Custom 12'
+        },
+        custom_13: {
+            anyOf: [
+                {
+                    type: 'string',
+                    format: 'date'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Custom 13'
+        },
+        custom_14: {
+            anyOf: [
+                {
+                    type: 'string',
+                    format: 'date'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Custom 14'
+        },
+        custom_15: {
+            anyOf: [
+                {
+                    type: 'string',
+                    format: 'date'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Custom 15'
+        },
+        completion_method: {
+            anyOf: [
+                {
+                    type: 'string'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Completion Method'
+        },
+        cost_center: {
+            anyOf: [
+                {
+                    type: 'string'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Cost Center'
+        },
+        cost_center_name: {
+            anyOf: [
+                {
+                    type: 'string'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Cost Center Name'
+        },
+        vendor_dept: {
+            anyOf: [
+                {
+                    type: 'string'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Vendor Dept'
+        },
+        order_no: {
+            anyOf: [
+                {
+                    type: 'string'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Order No'
+        },
+        order_item: {
+            anyOf: [
+                {
+                    type: 'integer'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Order Item'
+        },
+        bom_version: {
+            anyOf: [
+                {
+                    type: 'string'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Bom Version'
+        },
+        structure_date: {
+            anyOf: [
+                {
+                    type: 'string',
+                    format: 'date'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Structure Date'
+        },
+        has_routing: {
+            anyOf: [
+                {
+                    type: 'string'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Has Routing'
+        },
+        routing_no: {
+            anyOf: [
+                {
+                    type: 'string'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Routing No'
+        },
+        unit: {
+            anyOf: [
+                {
+                    type: 'string'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Unit'
+        },
+        warehouse_check: {
+            anyOf: [
+                {
+                    type: 'string'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Warehouse Check'
+        },
+        export_country: {
+            anyOf: [
+                {
+                    type: 'string'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Export Country'
+        },
+        export_country_name: {
+            anyOf: [
+                {
+                    type: 'string'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Export Country Name'
+        },
+        actual_start_date: {
+            anyOf: [
+                {
+                    type: 'string',
+                    format: 'date'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Actual Start Date'
+        },
+        issue_end_date: {
+            anyOf: [
+                {
+                    type: 'string',
+                    format: 'date'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Issue End Date'
+        }
+    },
+    type: 'object',
+    required: ['wo'],
+    title: 'ErpWoDetail'
+} as const;
+
+export const ErpWoMaterialSchema = {
+    properties: {
+        replaced_part_no: {
+            anyOf: [
+                {
+                    type: 'string'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Replaced Part No'
+        },
+        operation_no: {
+            anyOf: [
+                {
+                    type: 'string'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Operation No'
+        },
+        substitute_code: {
+            anyOf: [
+                {
+                    type: 'string'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Substitute Code'
+        },
+        substitute_rate: {
+            anyOf: [
+                {
+                    type: 'number'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Substitute Rate'
+        },
+        part_no: {
+            type: 'string',
+            title: 'Part No'
+        },
+        name: {
+            anyOf: [
+                {
+                    type: 'string'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Name'
+        },
+        specification: {
+            anyOf: [
+                {
+                    type: 'string'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Specification'
+        },
+        source: {
+            anyOf: [
+                {
+                    type: 'string'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Source'
+        },
+        unit: {
+            anyOf: [
+                {
+                    type: 'string'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Unit'
+        },
+        unit_rate: {
+            anyOf: [
+                {
+                    type: 'number'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Unit Rate'
+        },
+        flag: {
+            anyOf: [
+                {
+                    type: 'string'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Flag'
+        },
+        std_qpa: {
+            anyOf: [
+                {
+                    type: 'number'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Std Qpa'
+        },
+        actual_qpa: {
+            anyOf: [
+                {
+                    type: 'number'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Actual Qpa'
+        },
+        tolerance_rate: {
+            anyOf: [
+                {
+                    type: 'number'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Tolerance Rate'
+        },
+        required_qty: {
+            anyOf: [
+                {
+                    type: 'number'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Required Qty'
+        },
+        outsource_buy_qty: {
+            anyOf: [
+                {
+                    type: 'number'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Outsource Buy Qty'
+        },
+        issued_qty: {
+            anyOf: [
+                {
+                    type: 'number'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Issued Qty'
+        },
+        over_issued_qty: {
+            anyOf: [
+                {
+                    type: 'number'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Over Issued Qty'
+        },
+        shortage_qty: {
+            anyOf: [
+                {
+                    type: 'number'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Shortage Qty'
+        },
+        scrap_qty: {
+            anyOf: [
+                {
+                    type: 'number'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Scrap Qty'
+        },
+        stock_loss_qty: {
+            anyOf: [
+                {
+                    type: 'number'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Stock Loss Qty'
+        },
+        warehouse: {
+            anyOf: [
+                {
+                    type: 'string'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Warehouse'
+        }
+    },
+    type: 'object',
+    required: ['part_no'],
+    title: 'ErpWoMaterial'
+} as const;
+
 export const ErpWoOptionSchema = {
     properties: {
         value: {
@@ -717,6 +1643,50 @@ export const ErpWoRowSchema = {
                 }
             ],
             title: 'Part No'
+        },
+        name: {
+            anyOf: [
+                {
+                    type: 'string'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Name'
+        },
+        specification: {
+            anyOf: [
+                {
+                    type: 'string'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Specification'
+        },
+        issued_qty: {
+            anyOf: [
+                {
+                    type: 'number'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Issued Qty'
+        },
+        fqc: {
+            anyOf: [
+                {
+                    type: 'string'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Fqc'
         },
         plan_qty: {
             anyOf: [
@@ -1028,976 +1998,895 @@ export const ItemCreateSchema = {
 } as const;
 
 export const ItemDetailSchema = {
-    "properties": {
-        "part_no": {
-            "title": "Part No",
-            "type": "string"
+    properties: {
+        part_no: {
+            type: 'string',
+            title: 'Part No'
         },
-        "name": {
-            "anyOf": [
+        name: {
+            anyOf: [
                 {
-                    "type": "string"
+                    type: 'string'
                 },
                 {
-                    "type": "null"
+                    type: 'null'
                 }
             ],
-            "default": null,
-            "title": "Name"
+            title: 'Name'
         },
-        "specification": {
-            "anyOf": [
+        specification: {
+            anyOf: [
                 {
-                    "type": "string"
+                    type: 'string'
                 },
                 {
-                    "type": "null"
+                    type: 'null'
                 }
             ],
-            "default": null,
-            "title": "Specification"
+            title: 'Specification'
         },
-        "group_code": {
-            "anyOf": [
+        group_code: {
+            anyOf: [
                 {
-                    "type": "string"
+                    type: 'string'
                 },
                 {
-                    "type": "null"
+                    type: 'null'
                 }
             ],
-            "default": null,
-            "title": "Group Code"
+            title: 'Group Code'
         },
-        "group_name": {
-            "anyOf": [
+        group_name: {
+            anyOf: [
                 {
-                    "type": "string"
+                    type: 'string'
                 },
                 {
-                    "type": "null"
+                    type: 'null'
                 }
             ],
-            "default": null,
-            "title": "Group Name"
+            title: 'Group Name'
         },
-        "source": {
-            "anyOf": [
+        source: {
+            anyOf: [
                 {
-                    "type": "string"
+                    type: 'string'
                 },
                 {
-                    "type": "null"
+                    type: 'null'
                 }
             ],
-            "default": null,
-            "title": "Source"
+            title: 'Source'
         },
-        "status": {
-            "anyOf": [
+        status: {
+            anyOf: [
                 {
-                    "type": "string"
+                    type: 'string'
                 },
                 {
-                    "type": "null"
+                    type: 'null'
                 }
             ],
-            "default": null,
-            "title": "Status"
+            title: 'Status'
         },
-        "processing": {
-            "anyOf": [
+        processing: {
+            anyOf: [
                 {
-                    "type": "string"
+                    type: 'string'
                 },
                 {
-                    "type": "null"
+                    type: 'null'
                 }
             ],
-            "default": null,
-            "title": "Processing"
+            title: 'Processing'
         },
-        "vendor_control": {
-            "anyOf": [
+        vendor_control: {
+            anyOf: [
                 {
-                    "type": "string"
+                    type: 'string'
                 },
                 {
-                    "type": "null"
+                    type: 'null'
                 }
             ],
-            "default": null,
-            "title": "Vendor Control"
+            title: 'Vendor Control'
         },
-        "origin": {
-            "anyOf": [
+        origin: {
+            anyOf: [
                 {
-                    "type": "string"
+                    type: 'string'
                 },
                 {
-                    "type": "null"
+                    type: 'null'
                 }
             ],
-            "default": null,
-            "title": "Origin"
+            title: 'Origin'
         },
-        "software_object": {
-            "anyOf": [
+        software_object: {
+            anyOf: [
                 {
-                    "type": "string"
+                    type: 'string'
                 },
                 {
-                    "type": "null"
+                    type: 'null'
                 }
             ],
-            "default": null,
-            "title": "Software Object"
+            title: 'Software Object'
         },
-        "engineering_item": {
-            "anyOf": [
+        engineering_item: {
+            anyOf: [
                 {
-                    "type": "string"
+                    type: 'string'
                 },
                 {
-                    "type": "null"
+                    type: 'null'
                 }
             ],
-            "default": null,
-            "title": "Engineering Item"
+            title: 'Engineering Item'
         },
-        "auto_plugin_position": {
-            "anyOf": [
+        auto_plugin_position: {
+            anyOf: [
                 {
-                    "type": "string"
+                    type: 'string'
                 },
                 {
-                    "type": "null"
+                    type: 'null'
                 }
             ],
-            "default": null,
-            "title": "Auto Plugin Position"
+            title: 'Auto Plugin Position'
         },
-        "plugin_qpa_check": {
-            "anyOf": [
+        plugin_qpa_check: {
+            anyOf: [
                 {
-                    "type": "string"
+                    type: 'string'
                 },
                 {
-                    "type": "null"
+                    type: 'null'
                 }
             ],
-            "default": null,
-            "title": "Plugin Qpa Check"
+            title: 'Plugin Qpa Check'
         },
-        "co_product": {
-            "anyOf": [
+        co_product: {
+            anyOf: [
                 {
-                    "type": "string"
+                    type: 'string'
                 },
                 {
-                    "type": "null"
+                    type: 'null'
                 }
             ],
-            "default": null,
-            "title": "Co Product"
+            title: 'Co Product'
         },
-        "inspection": {
-            "anyOf": [
+        inspection: {
+            anyOf: [
                 {
-                    "type": "string"
+                    type: 'string'
                 },
                 {
-                    "type": "null"
+                    type: 'null'
                 }
             ],
-            "default": null,
-            "title": "Inspection"
+            title: 'Inspection'
         },
-        "repetitive_production": {
-            "anyOf": [
+        repetitive_production: {
+            anyOf: [
                 {
-                    "type": "string"
+                    type: 'string'
                 },
                 {
-                    "type": "null"
+                    type: 'null'
                 }
             ],
-            "default": null,
-            "title": "Repetitive Production"
+            title: 'Repetitive Production'
         },
-        "material_category": {
-            "anyOf": [
+        material_category: {
+            anyOf: [
                 {
-                    "type": "string"
+                    type: 'string'
                 },
                 {
-                    "type": "null"
+                    type: 'null'
                 }
             ],
-            "default": null,
-            "title": "Material Category"
+            title: 'Material Category'
         },
-        "abc_code": {
-            "anyOf": [
+        abc_code: {
+            anyOf: [
                 {
-                    "type": "string"
+                    type: 'string'
                 },
                 {
-                    "type": "null"
+                    type: 'null'
                 }
             ],
-            "default": null,
-            "title": "Abc Code"
+            title: 'Abc Code'
         },
-        "consumable": {
-            "anyOf": [
+        consumable: {
+            anyOf: [
                 {
-                    "type": "string"
+                    type: 'string'
                 },
                 {
-                    "type": "null"
+                    type: 'null'
                 }
             ],
-            "default": null,
-            "title": "Consumable"
+            title: 'Consumable'
         },
-        "replenishment_strategy": {
-            "anyOf": [
+        replenishment_strategy: {
+            anyOf: [
                 {
-                    "type": "string"
+                    type: 'string'
                 },
                 {
-                    "type": "null"
+                    type: 'null'
                 }
             ],
-            "default": null,
-            "title": "Replenishment Strategy"
+            title: 'Replenishment Strategy'
         },
-        "economic_order_qty": {
-            "anyOf": [
+        economic_order_qty: {
+            anyOf: [
                 {
-                    "type": "number"
+                    type: 'number'
                 },
                 {
-                    "type": "null"
+                    type: 'null'
                 }
             ],
-            "default": null,
-            "title": "Economic Order Qty"
+            title: 'Economic Order Qty'
         },
-        "average_order_qty": {
-            "anyOf": [
+        average_order_qty: {
+            anyOf: [
                 {
-                    "type": "number"
+                    type: 'number'
                 },
                 {
-                    "type": "null"
+                    type: 'null'
                 }
             ],
-            "default": null,
-            "title": "Average Order Qty"
+            title: 'Average Order Qty'
         },
-        "safety_stock": {
-            "anyOf": [
+        safety_stock: {
+            anyOf: [
                 {
-                    "type": "number"
+                    type: 'number'
                 },
                 {
-                    "type": "null"
+                    type: 'null'
                 }
             ],
-            "default": null,
-            "title": "Safety Stock"
+            title: 'Safety Stock'
         },
-        "safety_period": {
-            "anyOf": [
+        safety_period: {
+            anyOf: [
                 {
-                    "type": "number"
+                    type: 'number'
                 },
                 {
-                    "type": "null"
+                    type: 'null'
                 }
             ],
-            "default": null,
-            "title": "Safety Period"
+            title: 'Safety Period'
         },
-        "max_stock": {
-            "anyOf": [
+        max_stock: {
+            anyOf: [
                 {
-                    "type": "number"
+                    type: 'number'
                 },
                 {
-                    "type": "null"
+                    type: 'null'
                 }
             ],
-            "default": null,
-            "title": "Max Stock"
+            title: 'Max Stock'
         },
-        "shelf_life_days": {
-            "anyOf": [
+        shelf_life_days: {
+            anyOf: [
                 {
-                    "type": "number"
+                    type: 'number'
                 },
                 {
-                    "type": "null"
+                    type: 'null'
                 }
             ],
-            "default": null,
-            "title": "Shelf Life Days"
+            title: 'Shelf Life Days'
         },
-        "stock_unit": {
-            "anyOf": [
+        stock_unit: {
+            anyOf: [
                 {
-                    "type": "string"
+                    type: 'string'
                 },
                 {
-                    "type": "null"
+                    type: 'null'
                 }
             ],
-            "default": null,
-            "title": "Stock Unit"
+            title: 'Stock Unit'
         },
-        "primary_warehouse": {
-            "anyOf": [
+        primary_warehouse: {
+            anyOf: [
                 {
-                    "type": "string"
+                    type: 'string'
                 },
                 {
-                    "type": "null"
+                    type: 'null'
                 }
             ],
-            "default": null,
-            "title": "Primary Warehouse"
+            title: 'Primary Warehouse'
         },
-        "primary_location": {
-            "anyOf": [
+        primary_location: {
+            anyOf: [
                 {
-                    "type": "string"
+                    type: 'string'
                 },
                 {
-                    "type": "null"
+                    type: 'null'
                 }
             ],
-            "default": null,
-            "title": "Primary Location"
+            title: 'Primary Location'
         },
-        "warehouse_keeper": {
-            "anyOf": [
+        warehouse_keeper: {
+            anyOf: [
                 {
-                    "type": "string"
+                    type: 'string'
                 },
                 {
-                    "type": "null"
+                    type: 'null'
                 }
             ],
-            "default": null,
-            "title": "Warehouse Keeper"
+            title: 'Warehouse Keeper'
         },
-        "warehouse_keeper_name": {
-            "anyOf": [
+        warehouse_keeper_name: {
+            anyOf: [
                 {
-                    "type": "string"
+                    type: 'string'
                 },
                 {
-                    "type": "null"
+                    type: 'null'
                 }
             ],
-            "default": null,
-            "title": "Warehouse Keeper Name"
+            title: 'Warehouse Keeper Name'
         },
-        "lot_control": {
-            "anyOf": [
+        lot_control: {
+            anyOf: [
                 {
-                    "type": "string"
+                    type: 'string'
                 },
                 {
-                    "type": "null"
+                    type: 'null'
                 }
             ],
-            "default": null,
-            "title": "Lot Control"
+            title: 'Lot Control'
         },
-        "pallet_full_qty": {
-            "anyOf": [
+        pallet_full_qty: {
+            anyOf: [
                 {
-                    "type": "number"
+                    type: 'number'
                 },
                 {
-                    "type": "null"
+                    type: 'null'
                 }
             ],
-            "default": null,
-            "title": "Pallet Full Qty"
+            title: 'Pallet Full Qty'
         },
-        "manufacturing_lot_control": {
-            "anyOf": [
+        manufacturing_lot_control: {
+            anyOf: [
                 {
-                    "type": "string"
+                    type: 'string'
                 },
                 {
-                    "type": "null"
+                    type: 'null'
                 }
             ],
-            "default": null,
-            "title": "Manufacturing Lot Control"
+            title: 'Manufacturing Lot Control'
         },
-        "manufacturing_lot_auto_number": {
-            "anyOf": [
+        manufacturing_lot_auto_number: {
+            anyOf: [
                 {
-                    "type": "string"
+                    type: 'string'
                 },
                 {
-                    "type": "null"
+                    type: 'null'
                 }
             ],
-            "default": null,
-            "title": "Manufacturing Lot Auto Number"
+            title: 'Manufacturing Lot Auto Number'
         },
-        "manufacturing_lot_rule": {
-            "anyOf": [
+        manufacturing_lot_rule: {
+            anyOf: [
                 {
-                    "type": "string"
+                    type: 'string'
                 },
                 {
-                    "type": "null"
+                    type: 'null'
                 }
             ],
-            "default": null,
-            "title": "Manufacturing Lot Rule"
+            title: 'Manufacturing Lot Rule'
         },
-        "serial_control": {
-            "anyOf": [
+        serial_control: {
+            anyOf: [
                 {
-                    "type": "string"
+                    type: 'string'
                 },
                 {
-                    "type": "null"
+                    type: 'null'
                 }
             ],
-            "default": null,
-            "title": "Serial Control"
+            title: 'Serial Control'
         },
-        "serial_auto_number": {
-            "anyOf": [
+        serial_auto_number: {
+            anyOf: [
                 {
-                    "type": "string"
+                    type: 'string'
                 },
                 {
-                    "type": "null"
+                    type: 'null'
                 }
             ],
-            "default": null,
-            "title": "Serial Auto Number"
+            title: 'Serial Auto Number'
         },
-        "serial_rule": {
-            "anyOf": [
+        serial_rule: {
+            anyOf: [
                 {
-                    "type": "string"
+                    type: 'string'
                 },
                 {
-                    "type": "null"
+                    type: 'null'
                 }
             ],
-            "default": null,
-            "title": "Serial Rule"
+            title: 'Serial Rule'
         },
-        "serial_unique": {
-            "anyOf": [
+        serial_unique: {
+            anyOf: [
                 {
-                    "type": "string"
+                    type: 'string'
                 },
                 {
-                    "type": "null"
+                    type: 'null'
                 }
             ],
-            "default": null,
-            "title": "Serial Unique"
+            title: 'Serial Unique'
         },
-        "lot_sort_method": {
-            "anyOf": [
+        lot_sort_method: {
+            anyOf: [
                 {
-                    "type": "string"
+                    type: 'string'
                 },
                 {
-                    "type": "null"
+                    type: 'null'
                 }
             ],
-            "default": null,
-            "title": "Lot Sort Method"
+            title: 'Lot Sort Method'
         },
-        "brand_code": {
-            "anyOf": [
+        brand_code: {
+            anyOf: [
                 {
-                    "type": "string"
+                    type: 'string'
                 },
                 {
-                    "type": "null"
+                    type: 'null'
                 }
             ],
-            "default": null,
-            "title": "Brand Code"
+            title: 'Brand Code'
         },
-        "series_code": {
-            "anyOf": [
+        series_code: {
+            anyOf: [
                 {
-                    "type": "string"
+                    type: 'string'
                 },
                 {
-                    "type": "null"
+                    type: 'null'
                 }
             ],
-            "default": null,
-            "title": "Series Code"
+            title: 'Series Code'
         },
-        "manufacturer": {
-            "anyOf": [
+        manufacturer: {
+            anyOf: [
                 {
-                    "type": "string"
+                    type: 'string'
                 },
                 {
-                    "type": "null"
+                    type: 'null'
                 }
             ],
-            "default": null,
-            "title": "Manufacturer"
+            title: 'Manufacturer'
         },
-        "brand_name": {
-            "anyOf": [
+        brand_name: {
+            anyOf: [
                 {
-                    "type": "string"
+                    type: 'string'
                 },
                 {
-                    "type": "null"
+                    type: 'null'
                 }
             ],
-            "default": null,
-            "title": "Brand Name"
+            title: 'Brand Name'
         },
-        "series_name": {
-            "anyOf": [
+        series_name: {
+            anyOf: [
                 {
-                    "type": "string"
+                    type: 'string'
                 },
                 {
-                    "type": "null"
+                    type: 'null'
                 }
             ],
-            "default": null,
-            "title": "Series Name"
+            title: 'Series Name'
         },
-        "cost_group": {
-            "anyOf": [
+        cost_group: {
+            anyOf: [
                 {
-                    "type": "string"
+                    type: 'string'
                 },
                 {
-                    "type": "null"
+                    type: 'null'
                 }
             ],
-            "default": null,
-            "title": "Cost Group"
+            title: 'Cost Group'
         },
-        "account_code": {
-            "anyOf": [
+        account_code: {
+            anyOf: [
                 {
-                    "type": "string"
+                    type: 'string'
                 },
                 {
-                    "type": "null"
+                    type: 'null'
                 }
             ],
-            "default": null,
-            "title": "Account Code"
+            title: 'Account Code'
         },
-        "bonded_item": {
-            "anyOf": [
+        bonded_item: {
+            anyOf: [
                 {
-                    "type": "string"
+                    type: 'string'
                 },
                 {
-                    "type": "null"
+                    type: 'null'
                 }
             ],
-            "default": null,
-            "title": "Bonded Item"
+            title: 'Bonded Item'
         },
-        "bom_changed": {
-            "anyOf": [
+        bom_changed: {
+            anyOf: [
                 {
-                    "type": "string"
+                    type: 'string'
                 },
                 {
-                    "type": "null"
+                    type: 'null'
                 }
             ],
-            "default": null,
-            "title": "Bom Changed"
+            title: 'Bom Changed'
         },
-        "low_level_code": {
-            "anyOf": [
+        low_level_code: {
+            anyOf: [
                 {
-                    "type": "integer"
+                    type: 'integer'
                 },
                 {
-                    "type": "null"
+                    type: 'null'
                 }
             ],
-            "default": null,
-            "title": "Low Level Code"
+            title: 'Low Level Code'
         },
-        "monthly_joint_product": {
-            "anyOf": [
+        monthly_joint_product: {
+            anyOf: [
                 {
-                    "type": "string"
+                    type: 'string'
                 },
                 {
-                    "type": "null"
+                    type: 'null'
                 }
             ],
-            "default": null,
-            "title": "Monthly Joint Product"
+            title: 'Monthly Joint Product'
         },
-        "tax_classification_version": {
-            "anyOf": [
+        tax_classification_version: {
+            anyOf: [
                 {
-                    "type": "string"
+                    type: 'string'
                 },
                 {
-                    "type": "null"
+                    type: 'null'
                 }
             ],
-            "default": null,
-            "title": "Tax Classification Version"
+            title: 'Tax Classification Version'
         },
-        "tax_classification_code": {
-            "anyOf": [
+        tax_classification_code: {
+            anyOf: [
                 {
-                    "type": "string"
+                    type: 'string'
                 },
                 {
-                    "type": "null"
+                    type: 'null'
                 }
             ],
-            "default": null,
-            "title": "Tax Classification Code"
+            title: 'Tax Classification Code'
         },
-        "other_group_1": {
-            "anyOf": [
+        other_group_1: {
+            anyOf: [
                 {
-                    "type": "string"
+                    type: 'string'
                 },
                 {
-                    "type": "null"
+                    type: 'null'
                 }
             ],
-            "default": null,
-            "title": "Other Group 1"
+            title: 'Other Group 1'
         },
-        "other_group_2": {
-            "anyOf": [
+        other_group_2: {
+            anyOf: [
                 {
-                    "type": "string"
+                    type: 'string'
                 },
                 {
-                    "type": "null"
+                    type: 'null'
                 }
             ],
-            "default": null,
-            "title": "Other Group 2"
+            title: 'Other Group 2'
         },
-        "other_group_3": {
-            "anyOf": [
+        other_group_3: {
+            anyOf: [
                 {
-                    "type": "string"
+                    type: 'string'
                 },
                 {
-                    "type": "null"
+                    type: 'null'
                 }
             ],
-            "default": null,
-            "title": "Other Group 3"
+            title: 'Other Group 3'
         },
-        "quantitative_specification": {
-            "anyOf": [
+        quantitative_specification: {
+            anyOf: [
                 {
-                    "type": "number"
+                    type: 'number'
                 },
                 {
-                    "type": "null"
+                    type: 'null'
                 }
             ],
-            "default": null,
-            "title": "Quantitative Specification"
+            title: 'Quantitative Specification'
         },
-        "quantitative_unit": {
-            "anyOf": [
+        quantitative_unit: {
+            anyOf: [
                 {
-                    "type": "string"
+                    type: 'string'
                 },
                 {
-                    "type": "null"
+                    type: 'null'
                 }
             ],
-            "default": null,
-            "title": "Quantitative Unit"
+            title: 'Quantitative Unit'
         },
-        "first_created_date": {
-            "anyOf": [
+        first_created_date: {
+            anyOf: [
                 {
-                    "format": "date",
-                    "type": "string"
+                    type: 'string',
+                    format: 'date'
                 },
                 {
-                    "type": "null"
+                    type: 'null'
                 }
             ],
-            "default": null,
-            "title": "First Created Date"
+            title: 'First Created Date'
         },
-        "stagnation_date": {
-            "anyOf": [
+        stagnation_date: {
+            anyOf: [
                 {
-                    "format": "date",
-                    "type": "string"
+                    type: 'string',
+                    format: 'date'
                 },
                 {
-                    "type": "null"
+                    type: 'null'
                 }
             ],
-            "default": null,
-            "title": "Stagnation Date"
+            title: 'Stagnation Date'
         },
-        "opening_stagnation_date": {
-            "anyOf": [
+        opening_stagnation_date: {
+            anyOf: [
                 {
-                    "format": "date",
-                    "type": "string"
+                    type: 'string',
+                    format: 'date'
                 },
                 {
-                    "type": "null"
+                    type: 'null'
                 }
             ],
-            "default": null,
-            "title": "Opening Stagnation Date"
+            title: 'Opening Stagnation Date'
         },
-        "last_purchase_date": {
-            "anyOf": [
+        last_purchase_date: {
+            anyOf: [
                 {
-                    "format": "date",
-                    "type": "string"
+                    type: 'string',
+                    format: 'date'
                 },
                 {
-                    "type": "null"
+                    type: 'null'
                 }
             ],
-            "default": null,
-            "title": "Last Purchase Date"
+            title: 'Last Purchase Date'
         },
-        "last_receipt_date": {
-            "anyOf": [
+        last_receipt_date: {
+            anyOf: [
                 {
-                    "format": "date",
-                    "type": "string"
+                    type: 'string',
+                    format: 'date'
                 },
                 {
-                    "type": "null"
+                    type: 'null'
                 }
             ],
-            "default": null,
-            "title": "Last Receipt Date"
+            title: 'Last Receipt Date'
         },
-        "last_issue_date": {
-            "anyOf": [
+        last_issue_date: {
+            anyOf: [
                 {
-                    "format": "date",
-                    "type": "string"
+                    type: 'string',
+                    format: 'date'
                 },
                 {
-                    "type": "null"
+                    type: 'null'
                 }
             ],
-            "default": null,
-            "title": "Last Issue Date"
+            title: 'Last Issue Date'
         },
-        "last_movement_date": {
-            "anyOf": [
+        last_movement_date: {
+            anyOf: [
                 {
-                    "format": "date",
-                    "type": "string"
+                    type: 'string',
+                    format: 'date'
                 },
                 {
-                    "type": "null"
+                    type: 'null'
                 }
             ],
-            "default": null,
-            "title": "Last Movement Date"
+            title: 'Last Movement Date'
         },
-        "last_stocktake_date": {
-            "anyOf": [
+        last_stocktake_date: {
+            anyOf: [
                 {
-                    "format": "date",
-                    "type": "string"
+                    type: 'string',
+                    format: 'date'
                 },
                 {
-                    "type": "null"
+                    type: 'null'
                 }
             ],
-            "default": null,
-            "title": "Last Stocktake Date"
+            title: 'Last Stocktake Date'
         },
-        "shipping_valid_days": {
-            "anyOf": [
+        shipping_valid_days: {
+            anyOf: [
                 {
-                    "type": "number"
+                    type: 'number'
                 },
                 {
-                    "type": "null"
+                    type: 'null'
                 }
             ],
-            "default": null,
-            "title": "Shipping Valid Days"
+            title: 'Shipping Valid Days'
         },
-        "combination_item": {
-            "anyOf": [
+        combination_item: {
+            anyOf: [
                 {
-                    "type": "string"
+                    type: 'string'
                 },
                 {
-                    "type": "null"
+                    type: 'null'
                 }
             ],
-            "default": null,
-            "title": "Combination Item"
+            title: 'Combination Item'
         },
-        "combination_effective_date": {
-            "anyOf": [
+        combination_effective_date: {
+            anyOf: [
                 {
-                    "format": "date",
-                    "type": "string"
+                    type: 'string',
+                    format: 'date'
                 },
                 {
-                    "type": "null"
+                    type: 'null'
                 }
             ],
-            "default": null,
-            "title": "Combination Effective Date"
+            title: 'Combination Effective Date'
         },
-        "combination_expiry_date": {
-            "anyOf": [
+        combination_expiry_date: {
+            anyOf: [
                 {
-                    "format": "date",
-                    "type": "string"
+                    type: 'string',
+                    format: 'date'
                 },
                 {
-                    "type": "null"
+                    type: 'null'
                 }
             ],
-            "default": null,
-            "title": "Combination Expiry Date"
+            title: 'Combination Expiry Date'
         },
-        "health_insurance_item_no": {
-            "anyOf": [
+        health_insurance_item_no: {
+            anyOf: [
                 {
-                    "type": "string"
+                    type: 'string'
                 },
                 {
-                    "type": "null"
+                    type: 'null'
                 }
             ],
-            "default": null,
-            "title": "Health Insurance Item No"
+            title: 'Health Insurance Item No'
         },
-        "health_license_no": {
-            "anyOf": [
+        health_license_no: {
+            anyOf: [
                 {
-                    "type": "string"
+                    type: 'string'
                 },
                 {
-                    "type": "null"
+                    type: 'null'
                 }
             ],
-            "default": null,
-            "title": "Health License No"
+            title: 'Health License No'
         },
-        "health_license_expiry_date": {
-            "anyOf": [
+        health_license_expiry_date: {
+            anyOf: [
                 {
-                    "format": "date",
-                    "type": "string"
+                    type: 'string',
+                    format: 'date'
                 },
                 {
-                    "type": "null"
+                    type: 'null'
                 }
             ],
-            "default": null,
-            "title": "Health License Expiry Date"
+            title: 'Health License Expiry Date'
         },
-        "reinspection_days": {
-            "anyOf": [
+        reinspection_days: {
+            anyOf: [
                 {
-                    "type": "number"
+                    type: 'number'
                 },
                 {
-                    "type": "null"
+                    type: 'null'
                 }
             ],
-            "default": null,
-            "title": "Reinspection Days"
+            title: 'Reinspection Days'
         },
-        "controlled_drug": {
-            "anyOf": [
+        controlled_drug: {
+            anyOf: [
                 {
-                    "type": "string"
+                    type: 'string'
                 },
                 {
-                    "type": "null"
+                    type: 'null'
                 }
             ],
-            "default": null,
-            "title": "Controlled Drug"
+            title: 'Controlled Drug'
         },
-        "cold_item": {
-            "anyOf": [
+        cold_item: {
+            anyOf: [
                 {
-                    "type": "string"
+                    type: 'string'
                 },
                 {
-                    "type": "null"
+                    type: 'null'
                 }
             ],
-            "default": null,
-            "title": "Cold Item"
+            title: 'Cold Item'
         },
-        "drug_declaration": {
-            "anyOf": [
+        drug_declaration: {
+            anyOf: [
                 {
-                    "type": "string"
+                    type: 'string'
                 },
                 {
-                    "type": "null"
+                    type: 'null'
                 }
             ],
-            "default": null,
-            "title": "Drug Declaration"
+            title: 'Drug Declaration'
         },
-        "observation_item": {
-            "anyOf": [
+        observation_item: {
+            anyOf: [
                 {
-                    "type": "string"
+                    type: 'string'
                 },
                 {
-                    "type": "null"
+                    type: 'null'
                 }
             ],
-            "default": null,
-            "title": "Observation Item"
+            title: 'Observation Item'
         }
     },
-    "required": [
-        "part_no"
-    ],
-    "title": "ItemDetail",
-    "type": "object"
+    type: 'object',
+    required: ['part_no'],
+    title: 'ItemDetail'
 } as const;
 
 export const ItemOptionSchema = {

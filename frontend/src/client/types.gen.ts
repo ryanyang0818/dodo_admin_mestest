@@ -105,6 +105,95 @@ export type ErpSlipRow = {
     name?: (string | null);
 };
 
+export type ErpWoDetail = {
+    wo: string;
+    wo_name?: (string | null);
+    wo_type?: (number | null);
+    status?: (string | null);
+    confirmed?: (string | null);
+    part_no?: (string | null);
+    name?: (string | null);
+    specification?: (string | null);
+    issued_qty?: (number | null);
+    fqc?: (string | null);
+    plan_qty?: (number | null);
+    completed_qty?: (number | null);
+    scrap_qty?: (number | null);
+    plan_start_date?: (string | null);
+    plan_end_date?: (string | null);
+    line_no?: (string | null);
+    mes_flow_type?: (number | null);
+    lot_no?: (string | null);
+    input_date?: (string | null);
+    approval_status?: (string | null);
+    need_sign?: (string | null);
+    close_status?: (string | null);
+    close_date?: (string | null);
+    applicant?: (string | null);
+    applicant_name?: (string | null);
+    change_no?: (string | null);
+    change_routing_no?: (string | null);
+    pbi_no?: (string | null);
+    parent_wo?: (string | null);
+    notice_no?: (string | null);
+    issue_labor_end_date?: (string | null);
+    backup_generated?: (string | null);
+    outsource_type?: (string | null);
+    custom_01?: (string | null);
+    custom_04?: (string | null);
+    custom_05?: (string | null);
+    custom_06?: (string | null);
+    custom_07?: (number | null);
+    custom_08?: (number | null);
+    custom_09?: (number | null);
+    custom_11?: (number | null);
+    custom_12?: (number | null);
+    custom_13?: (string | null);
+    custom_14?: (string | null);
+    custom_15?: (string | null);
+    completion_method?: (string | null);
+    cost_center?: (string | null);
+    cost_center_name?: (string | null);
+    vendor_dept?: (string | null);
+    order_no?: (string | null);
+    order_item?: (number | null);
+    bom_version?: (string | null);
+    structure_date?: (string | null);
+    has_routing?: (string | null);
+    routing_no?: (string | null);
+    unit?: (string | null);
+    warehouse_check?: (string | null);
+    export_country?: (string | null);
+    export_country_name?: (string | null);
+    actual_start_date?: (string | null);
+    issue_end_date?: (string | null);
+};
+
+export type ErpWoMaterial = {
+    replaced_part_no?: (string | null);
+    operation_no?: (string | null);
+    substitute_code?: (string | null);
+    substitute_rate?: (number | null);
+    part_no: string;
+    name?: (string | null);
+    specification?: (string | null);
+    source?: (string | null);
+    unit?: (string | null);
+    unit_rate?: (number | null);
+    flag?: (string | null);
+    std_qpa?: (number | null);
+    actual_qpa?: (number | null);
+    tolerance_rate?: (number | null);
+    required_qty?: (number | null);
+    outsource_buy_qty?: (number | null);
+    issued_qty?: (number | null);
+    over_issued_qty?: (number | null);
+    shortage_qty?: (number | null);
+    scrap_qty?: (number | null);
+    stock_loss_qty?: (number | null);
+    warehouse?: (string | null);
+};
+
 export type ErpWoOption = {
     value: string;
     label: string;
@@ -134,6 +223,10 @@ export type ErpWoRow = {
     status?: (string | null);
     confirmed?: (string | null);
     part_no?: (string | null);
+    name?: (string | null);
+    specification?: (string | null);
+    issued_qty?: (number | null);
+    fqc?: (string | null);
     plan_qty?: (number | null);
     completed_qty?: (number | null);
     scrap_qty?: (number | null);
@@ -993,15 +1086,13 @@ export type PageErpMenuReadonlyReadErpMenuResponse = (ErpMenuResponse);
 export type PageErpSlipReadonlyReadErpSlipsResponse = (ErpSlipResponse);
 
 export type PageErpWoReadonlyReadErpWoSqlData = {
-    includeInactive?: boolean;
     inputDateFrom?: string;
     inputDateTo?: string;
-    lineNo?: (string | null);
     mesFlowType?: ('1' | '2' | '3' | '4' | 'none' | null);
     page?: number;
-    pageSize?: number;
+    pageSize?: 0 | 25 | 50 | 100;
     partNo?: (string | null);
-    sortBy?: 'wo' | 'wo_name' | 'wo_type' | 'status' | 'confirmed' | 'part_no' | 'plan_qty' | 'completed_qty' | 'scrap_qty' | 'plan_start_date' | 'plan_end_date' | 'line_no' | 'mes_flow_type' | 'lot_no' | 'input_date';
+    sortBy?: 'wo' | 'wo_name' | 'wo_type' | 'status' | 'confirmed' | 'part_no' | 'plan_qty' | 'completed_qty' | 'scrap_qty' | 'plan_start_date' | 'plan_end_date' | 'line_no' | 'mes_flow_type' | 'lot_no' | 'input_date' | 'name' | 'specification' | 'issued_qty' | 'fqc';
     sortDirection?: 'asc' | 'desc';
     status?: ('1' | '2' | '3' | '4' | '5' | '6' | '7' | '8' | null);
     wo?: (string | null);
@@ -1012,34 +1103,26 @@ export type PageErpWoReadonlyReadErpWoSqlResponse = (ErpWoSql);
 
 export type PageErpWoReadonlyReadErpWoOptionsResponse = (ErpWoOptions);
 
-export type PageErpWoReadonlyExportErpWoData = {
-    includeInactive?: boolean;
-    inputDateFrom?: string;
-    inputDateTo?: string;
-    lineNo?: (string | null);
-    mesFlowType?: ('1' | '2' | '3' | '4' | 'none' | null);
-    page?: number;
-    pageSize?: number;
-    partNo?: (string | null);
-    sortBy?: 'wo' | 'wo_name' | 'wo_type' | 'status' | 'confirmed' | 'part_no' | 'plan_qty' | 'completed_qty' | 'scrap_qty' | 'plan_start_date' | 'plan_end_date' | 'line_no' | 'mes_flow_type' | 'lot_no' | 'input_date';
-    sortDirection?: 'asc' | 'desc';
-    status?: ('1' | '2' | '3' | '4' | '5' | '6' | '7' | '8' | null);
-    wo?: (string | null);
-    woType?: (1 | 2 | 5 | 7 | 8 | 11 | 12 | 13 | 15 | null);
+export type PageErpWoReadonlyReadErpWoDetailData = {
+    wo: string;
 };
 
-export type PageErpWoReadonlyExportErpWoResponse = (unknown);
+export type PageErpWoReadonlyReadErpWoDetailResponse = (ErpWoDetail);
+
+export type PageErpWoReadonlyReadErpWoMaterialsData = {
+    wo: string;
+};
+
+export type PageErpWoReadonlyReadErpWoMaterialsResponse = (Array<ErpWoMaterial>);
 
 export type PageErpWoReadonlyReadErpWoData = {
-    includeInactive?: boolean;
     inputDateFrom?: string;
     inputDateTo?: string;
-    lineNo?: (string | null);
     mesFlowType?: ('1' | '2' | '3' | '4' | 'none' | null);
     page?: number;
-    pageSize?: number;
+    pageSize?: 0 | 25 | 50 | 100;
     partNo?: (string | null);
-    sortBy?: 'wo' | 'wo_name' | 'wo_type' | 'status' | 'confirmed' | 'part_no' | 'plan_qty' | 'completed_qty' | 'scrap_qty' | 'plan_start_date' | 'plan_end_date' | 'line_no' | 'mes_flow_type' | 'lot_no' | 'input_date';
+    sortBy?: 'wo' | 'wo_name' | 'wo_type' | 'status' | 'confirmed' | 'part_no' | 'plan_qty' | 'completed_qty' | 'scrap_qty' | 'plan_start_date' | 'plan_end_date' | 'line_no' | 'mes_flow_type' | 'lot_no' | 'input_date' | 'name' | 'specification' | 'issued_qty' | 'fqc';
     sortDirection?: 'asc' | 'desc';
     status?: ('1' | '2' | '3' | '4' | '5' | '6' | '7' | '8' | null);
     wo?: (string | null);

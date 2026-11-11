@@ -24,7 +24,7 @@ import { SidebarTrigger } from "@/components/ui/sidebar"
 import useAuth from "@/hooks/useAuth"
 import { siteConfig } from "@/site.config"
 import { getInitials } from "@/utils"
-import dodoIcon from "/assets/images/dodo-icon-light.svg"
+import mwfIcon from "/assets/images/mwf-icon.svg"
 import { useHeaderVisibility } from "./header-visibility"
 
 const departmentTabs = []
@@ -61,7 +61,7 @@ export function UserHeader() {
         to="/"
         className="flex h-full shrink-0 items-center gap-2.5 border-r border-slate-200 pr-5"
       >
-        <img src={dodoIcon} alt="DoDo Admin" className="size-[30px] rounded" />
+        <img src={mwfIcon} alt={siteConfig.appName} className="size-[30px]" />
         <div className="min-w-0 leading-tight">
           <div className="font-semibold text-slate-950">
             {siteConfig.appName}
