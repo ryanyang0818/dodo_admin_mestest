@@ -15,6 +15,7 @@ import { MesInspectionQuery } from "@/components/MesInspectionQuery/MesInspectio
 import { MesUserView } from "@/components/MesUser/MesUserView"
 import { MesWoReport } from "@/components/MesWoReport/MesWoReport"
 import { MesWorkReport } from "@/components/MesWorkReport/MesWorkReport"
+import { ProductionWhiteboard } from "@/components/ProductionWhiteboard/ProductionWhiteboard"
 import { RoleReport } from "@/components/RoleReport/RoleReport"
 import type { TabKey } from "@/components/TabHeader/types"
 import { TodoReport } from "@/components/TodoReport/TodoReport"
@@ -77,6 +78,9 @@ export const tabRegistry: Record<TabKey, TabDefinition> = {
   },
   "erp.wo-readonly": {
     component: ErpWoReadonly,
+  },
+  "production.whiteboard": {
+    component: ProductionWhiteboard,
   },
   "erp.slip-readonly": {
     component: ErpSlipReadonly,

@@ -247,25 +247,48 @@ export function ErpWoReadonly() {
           const text = woText(key, getValue())
           if (key !== "wo") return text
           return (
-            <button
-              type="button"
-              className="max-w-full cursor-pointer overflow-hidden text-left text-ellipsis whitespace-nowrap underline decoration-dotted underline-offset-2"
-              title={`${text}（雙擊查看明細）`}
-              disabled={query.isPlaceholderData}
-              onDoubleClick={() => setDetailWo(row.original.wo)}
-              onKeyDown={(event) => {
-                if (event.key === "Enter") {
-                  event.preventDefault()
-                  setDetailWo(row.original.wo)
-                }
-              }}
-            >
-              {text}
-            </button>
+            <span className="flex min-w-0 items-center gap-1">
+              <button
+                type="button"
+                className="max-w-full cursor-pointer overflow-hidden text-left text-ellipsis whitespace-nowrap underline decoration-dotted underline-offset-2"
+                title={`${text}（雙擊查看明細）`}
+                disabled={query.isPlaceholderData}
+                onDoubleClick={() => setDetailWo(row.original.wo)}
+                onKeyDown={(event) => {
+                  if (event.key === "Enter") {
+                    event.preventDefault()
+                    setDetailWo(row.original.wo)
+                  }
+                }}
+              >
+                {text}
+              </button>
+              <button
+                type="button"
+                className="inline-flex size-4 shrink-0 items-center justify-center rounded text-muted-foreground hover:bg-muted hover:text-foreground focus-visible:outline-2 focus-visible:outline-ring disabled:opacity-50"
+                title={`複製工單 ${text}`}
+                aria-label={`複製工單 ${text}`}
+                disabled={query.isPlaceholderData}
+                onDoubleClick={(event) => event.stopPropagation()}
+                onClick={async (event) => {
+                  event.stopPropagation()
+                  try {
+                    await navigator.clipboard.writeText(row.original.wo)
+                    toast.showSuccessToast(`已複製工單：${row.original.wo}`)
+                  } catch {
+                    toast.showErrorToast(
+                      "無法存取剪貼簿，請選取工單編號手動複製。",
+                    )
+                  }
+                }}
+              >
+                <Copy className="size-3" aria-hidden="true" />
+              </button>
+            </span>
           )
         },
       })),
-    [query.isPlaceholderData],
+    [query.isPlaceholderData, toast],
   )
   const table = useReactTable({
     data: query.data?.data ?? emptyRows,

@@ -4,6 +4,7 @@ import {
   Link as RouterLink,
   redirect,
 } from "@tanstack/react-router"
+import { LogIn, PanelRightClose } from "lucide-react"
 import { useEffect, useRef, useState } from "react"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
@@ -11,6 +12,7 @@ import { z } from "zod"
 import type { Body_login_login_access_token as AccessToken } from "@/client"
 import { AuthLayout } from "@/components/Common/AuthLayout"
 import { LoginAside } from "@/components/Common/LoginAside"
+import { Button } from "@/components/ui/button"
 import {
   Form,
   FormControl,
@@ -39,6 +41,7 @@ const GUEST_ACCOUNT: FormData = {
   password: "changethis",
 }
 const GUEST_LOGIN_DELAY_MS = 2000
+const LOGIN_PANEL_STORAGE_KEY = "login-panel-collapsed"
 
 export const Route = createFileRoute("/login")({
   component: Login,
@@ -59,6 +62,33 @@ export const Route = createFileRoute("/login")({
 })
 
 function Login() {
+  const [panelCollapsed, setPanelCollapsed] = useState(() => {
+    try {
+      return localStorage.getItem(LOGIN_PANEL_STORAGE_KEY) === "true"
+    } catch {
+      return false
+    }
+  })
+  const openLoginButton = useRef<HTMLButtonElement>(null)
+  const closeLoginButton = useRef<HTMLButtonElement>(null)
+  const restorePanelFocus = useRef(false)
+
+  const toggleLoginPanel = () => {
+    restorePanelFocus.current = true
+    setPanelCollapsed((collapsed) => !collapsed)
+  }
+
+  useEffect(() => {
+    try {
+      localStorage.setItem(LOGIN_PANEL_STORAGE_KEY, String(panelCollapsed))
+    } catch {
+      // 瀏覽器禁止儲存時，仍可在本次頁面中收合與展開。
+    }
+    if (restorePanelFocus.current) {
+      ;(panelCollapsed ? openLoginButton : closeLoginButton).current?.focus()
+      restorePanelFocus.current = false
+    }
+  }, [panelCollapsed])
   const { loginMutation } = useAuth()
   const [guestLoading, setGuestLoading] = useState(false)
   const guestTimer = useRef<ReturnType<typeof setTimeout>>(undefined)
@@ -93,7 +123,43 @@ function Login() {
   useEffect(() => () => clearTimeout(guestTimer.current), [])
 
   return (
-    <AuthLayout aside={<LoginAside />}>
+    <AuthLayout
+      panelId="login-panel"
+      panelHidden={panelCollapsed}
+      aside={
+        <LoginAside
+          loginAction={
+            panelCollapsed ? (
+              <Button
+                ref={openLoginButton}
+                type="button"
+                variant="outline"
+                onClick={toggleLoginPanel}
+                aria-expanded={false}
+                aria-controls="login-panel"
+              >
+                <LogIn aria-hidden="true" />
+                開啟登入
+              </Button>
+            ) : null
+          }
+        />
+      }
+      panelHeader={
+        <Button
+          ref={closeLoginButton}
+          type="button"
+          variant="ghost"
+          className="self-end"
+          onClick={toggleLoginPanel}
+          aria-expanded={true}
+          aria-controls="login-panel"
+        >
+          <PanelRightClose aria-hidden="true" />
+          收合登入區
+        </Button>
+      }
+    >
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
